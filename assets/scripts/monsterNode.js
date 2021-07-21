@@ -27,7 +27,9 @@ cc.Class({
         monster.parent=this.node
         monster.x=startPos.x*106+106/2;
         monster.y=-startPos.y*106-106/2;
-        monster.spriteFrame=spriteFrame;
+        
+        let js=monster.getComponent("monsterItem");
+        js.setMonsterSpriteFrame(spriteFrame);
 
         let moveTo=cc.tween()
         for(let i=1;i<pathArr.length;i++){
