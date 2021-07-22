@@ -9,41 +9,50 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        m_monsterItem:cc.Prefab,
-        m_monsterAtlasArr:[cc.SpriteAtlas]
+        m_monsterItem:cc.Prefab
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         window.m_gMonsterBuild=this;
+        this.m_monsterArr=[];
+        this.m_monsterPool=new cc.NodePool();
+        this.schedule(this.updateMonster,1.0);
     },
 
-    buildMonster(pathArr,type,index){
-        let startPos=pathArr[0];
-        let spriteFrame=this.m_monsterAtlasArr[type].getSpriteFrame(index);
+    createMonster(){
+        let monster;
+        if(this.m_monsterPool.size()>0)
+            monster=this.m_monsterPool.get();   
+        else
+            monster=cc.instantiate(this.m_monsterItem);
+        return monster;
+    },
+    recycleMonster(monster){
+        this.m_monsterPool.put(monster);
+    },
 
-        let monster=cc.instantiate(this.m_monsterItem);
+    buildMonster(pathList,type,index){
+        let monster=this.createMonster();
         monster.parent=this.node
-        monster.x=startPos.x*106+106/2;
-        monster.y=-startPos.y*106-106/2;
+        this.m_monsterArr.push(monster);
         
         let js=monster.getComponent("monsterItem");
-        js.setMonsterSpriteFrame(spriteFrame);
+        js.init(pathList,type,index);
+    },
 
-        let moveTo=cc.tween()
-        for(let i=2;i<pathArr.length;i++){
-            let _x=pathArr[i].x*106+106/2;
-            let _y=-pathArr[i].y*106-106/2;
-            moveTo=moveTo.to(1,{position:cc.v2(_x,_y)});
+    updateMonster(){
+        this.m_monsterArr.sort((a,b)=>{
+            if(a.y>b.y){
+                return -1;
+            }
+            return 1;
+        })
+
+        for(let i=0;i<this.m_monsterArr.length;i++){
+            this.m_monsterArr[i].zIndex=i;
         }
-
-        let _x=pathArr[1].x*106;
-        let _y = -pathArr[1].y * 106 ;
-        let moveTo1 = cc.tween().to(0.5, { scale: 1.2,position: cc.v2(_x, _y) });
-        let moveTo2 = cc.tween().to(0.5, { scale: 1.0,position: cc.v2(_x+106/2, _y- 106 / 2) });
-
-        cc.tween(monster).then(moveTo1).then(moveTo2).then(moveTo).start();
     },
 
     start () {

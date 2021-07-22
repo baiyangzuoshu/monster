@@ -19,7 +19,9 @@ cc.Class({
     clickEvent(target,data){
         if("怪物出动"==data){
             let pathList=window.m_gMapDataManager.getPathData();
-            window.m_gMonsterBuild.buildMonster(pathList,0,0);
+            let type=window.random(0,2);
+            let index=window.random(0,10);
+            window.m_gMonsterBuild.buildMonster(pathList,type,index);
         }
     },
 
