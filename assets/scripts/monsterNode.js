@@ -32,12 +32,18 @@ cc.Class({
         js.setMonsterSpriteFrame(spriteFrame);
 
         let moveTo=cc.tween()
-        for(let i=1;i<pathArr.length;i++){
+        for(let i=2;i<pathArr.length;i++){
             let _x=pathArr[i].x*106+106/2;
             let _y=-pathArr[i].y*106-106/2;
             moveTo=moveTo.to(1,{position:cc.v2(_x,_y)});
         }
-        cc.tween(monster).then(moveTo).start();
+
+        let _x=pathArr[1].x*106;
+        let _y = -pathArr[1].y * 106 ;
+        let moveTo1 = cc.tween().to(0.5, { scale: 1.2,position: cc.v2(_x, _y) });
+        let moveTo2 = cc.tween().to(0.5, { scale: 1.0,position: cc.v2(_x+106/2, _y- 106 / 2) });
+
+        cc.tween(monster).then(moveTo1).then(moveTo2).then(moveTo).start();
     },
 
     start () {
