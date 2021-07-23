@@ -33,6 +33,13 @@ cc.Class({
         this.m_monsterPool.put(monster);
     },
 
+    build(){
+        let pathList=window.m_gMapDataManager.getPathData();
+        let type=window.random(0,2);
+        let index=window.random(0,10);
+        this.buildMonster(pathList,type,index);
+    },
+
     buildMonster(pathList,type,index){
         let monster=this.createMonster();
         monster.parent=this.node

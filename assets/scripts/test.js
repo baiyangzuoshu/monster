@@ -9,12 +9,20 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        
+       
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {},
+    buildMonster(){
+        window.m_gMonsterBuild.build();
+    },
+
+    clearCannon(){
+        window.m_gCannonBuild.clearAllCannon();
+    },
+
+    // onLoad () {},
 
     start () {
 

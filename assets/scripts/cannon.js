@@ -16,6 +16,10 @@ cc.Class({
 
     onLoad () {},
 
+    initCannon(){
+        
+    },
+
     start () {
 
     },

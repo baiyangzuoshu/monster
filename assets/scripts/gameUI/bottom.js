@@ -39,10 +39,14 @@ cc.Class({
         this.m_isMakeBuild = true;
         cc.tween(this.m_make_hammer)
             .to(0.5, { angle: 90 })
+            .call(()=>{
+                if(window.m_gCannonBuild.build())
+                    this.subMakeCount();
+            })
             .to(0.5, { angle: 0 })
             .call(() => {
                 this.m_isMakeBuild = false;
-                this.subMakeCount();})
+            })
             .start();
     },
 
