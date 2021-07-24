@@ -34,6 +34,10 @@ cc.Class({
     getCurLevel(){
         return this.m_curLevel;
     },
+    setCurLevel(level){
+        this.m_curLevel=parseInt(level);
+        this.m_levelLab.string=""+this.m_curLevel;
+    },
 
     start () {
 

@@ -137,25 +137,31 @@ cc.Class({
             if(-1==index)return;
             
             let data=this.m_cannonData[index];
+            let selectedCannon=this.m_cannonData[this.m_curSelectedIndex].cannon;
+
             if(data.isMakeBuilded){
                 let cannon=data.cannon;
                 let cur_js=cannon.getComponent("cannon");
-                let selectedCannon=this.m_cannonData[this.m_curSelectedIndex].cannon;
                 let selected_js=selectedCannon.getComponent("cannon");
                 cur_js.addLevel(selected_js.getCurLevel());
             }
             else{
-                let cannon=cc.instantiate(this.m_cannonData[this.m_curSelectedIndex].cannon);
+                let cannon=cc.instantiate(selectedCannon);
                 cannon.parent=this.node;
                 cannon.x=data.x*106+106/2;
                 cannon.y=-data.y*106-106/2;
 
                 data.cannon=cannon;
                 data.isMakeBuilded=true;
+
+                let cur_js=cannon.getComponent("cannon");
+                let selected_js=selectedCannon.getComponent("cannon"); 
+                cur_js.setCurLevel(selected_js.getCurLevel());
             }
 
             this.resetCannonDataByIndex(this.m_curSelectedIndex);
         }
+        this.m_curCopyConnon=null;
         this.m_curSelectedIndex=-1;
         cc.log("touchend");
     },
@@ -164,6 +170,7 @@ cc.Class({
             this.recycleCannon(this.m_curCopyConnon);
             this.resetAllCannonOpacity();
         }
+        this.m_curCopyConnon=null;
         this.m_curSelectedIndex=-1;
         cc.log("touchcancel");
     },
