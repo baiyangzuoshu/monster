@@ -9,26 +9,30 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        m_gun:cc.Sprite,
-        m_pad:cc.Sprite,
+        m_gunNode:cc.Node,
+        m_padNode:cc.Node,
+        m_gunAtlas:cc.SpriteAtlas,
+        m_padAtlas:cc.SpriteAtlas,
         m_levelLab:cc.Label
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        
+       
     },
 
-    initCannon(){
-        this.m_curLevel=1;
-        this.m_gun.node.angle=window.random(0,360);
-        this.m_levelLab.string=""+this.m_curLevel;
+    initCannon(level,type){
+        this.m_curLevel=level;
+        this.m_curType=type;
+        this.m_gunNode.angle=window.random(0,360);
+        this.updateGunAndPadShow();
     },
 
     addLevel(level){
         this.m_curLevel+=parseInt(level);
         this.m_levelLab.string=""+this.m_curLevel;
+        this.updateGunAndPadShow();
     },
 
     getCurLevel(){
@@ -37,11 +41,34 @@ cc.Class({
     setCurLevel(level){
         this.m_curLevel=parseInt(level);
         this.m_levelLab.string=""+this.m_curLevel;
+        this.updateGunAndPadShow();
+    },
+    setCurType(type){
+        this.m_curType=type;
+        this.updateGunAndPadShow();
+    },
+    getCurType(){
+        return this.m_curType;
     },
 
-    start () {
+    updateGunAndPadShow(){
+        let gunName=""+this.m_curType+"_"+this.m_curLevel;
+        let gunSpriteFrame=this.m_gunAtlas.getSpriteFrame(gunName);
+        let gunSprite=this.m_gunNode.getComponent(cc.Sprite);
+        gunSprite.spriteFrame=gunSpriteFrame;
 
+        let padName=""+this.m_curType+"_"+Math.floor(this.m_curLevel%3);
+        let padSpriteFrame=this.m_padAtlas.getSpriteFrame(padName);
+        let padSprite=this.m_padNode.getComponent(cc.Sprite);
+        padSprite.spriteFrame=padSpriteFrame;
     },
 
-    // update (dt) {},
+    depthCopyData(cur_js){
+        cur_js.setCurLevel(this.getCurLevel());
+        cur_js.setCurType(this.getCurType());
+    },
+
+    isSynthetic(cur_js){
+       return cur_js.getCurType()==this.getCurType()&&cur_js.getCurLevel()==this.getCurLevel();
+    },
 });

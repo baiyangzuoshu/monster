@@ -68,7 +68,7 @@ cc.Class({
         let _y=this.m_cannonSp.y;
         let cannon=this.getCannon();
         let js=cannon.getComponent("cannon");
-        js.initCannon();
+        js.initCannon(1,window.random(0,6));
         cannon.x=_x;
         cannon.y=_y;
         cannon.parent=this.node;
@@ -143,7 +143,18 @@ cc.Class({
                 let cannon=data.cannon;
                 let cur_js=cannon.getComponent("cannon");
                 let selected_js=selectedCannon.getComponent("cannon");
-                cur_js.addLevel(selected_js.getCurLevel());
+                if(cur_js.isSynthetic(selected_js)){//合成
+                    cur_js.addLevel(selected_js.getCurLevel());
+                    this.resetCannonDataByIndex(this.m_curSelectedIndex);
+                }
+                else{//交换位置
+                    this.m_cannonData[index].cannon=selectedCannon;
+                    selectedCannon.x=106*this.m_cannonData[index].x+106/2;
+                    selectedCannon.y=-106*this.m_cannonData[index].y-106/2;
+                    this.m_cannonData[this.m_curSelectedIndex].cannon=cannon;
+                    cannon.x=106* this.m_cannonData[this.m_curSelectedIndex].x+106/2;
+                    cannon.y=-106* this.m_cannonData[this.m_curSelectedIndex].y-106/2;
+                }
             }
             else{
                 let cannon=cc.instantiate(selectedCannon);
@@ -156,10 +167,10 @@ cc.Class({
 
                 let cur_js=cannon.getComponent("cannon");
                 let selected_js=selectedCannon.getComponent("cannon"); 
-                cur_js.setCurLevel(selected_js.getCurLevel());
-            }
+                selected_js.depthCopyData(cur_js);
 
-            this.resetCannonDataByIndex(this.m_curSelectedIndex);
+                this.resetCannonDataByIndex(this.m_curSelectedIndex);
+            }
         }
         this.m_curCopyConnon=null;
         this.m_curSelectedIndex=-1;
