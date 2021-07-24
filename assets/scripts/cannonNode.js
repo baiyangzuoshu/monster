@@ -37,6 +37,7 @@ cc.Class({
         return cannon;
     },
     recycleCannon(cannon){
+        cannon.getComponent("cannon").resetCannon();
         this.m_cannonPool.put(cannon)
     },
 
@@ -115,6 +116,8 @@ cc.Class({
                 this.m_curCopyConnon=cc.instantiate(cannon);
                 this.m_curCopyConnon.parent=this.node;
                 cannon.opacity=127;
+
+                this.showCannonHit(cannon);
             }
         }
         cc.log("touchstart",nodePos);
@@ -125,16 +128,25 @@ cc.Class({
             let nodePos=this.node.convertToNodeSpaceAR(event.getLocation());
             this.m_curCopyConnon.x=nodePos.x;
             this.m_curCopyConnon.y=nodePos.y;
+            let index=this.getCannonIndexByNodePos(nodePos);
+            if(index>-1){
+                if(this.m_cannonData[index].isMakeBuilded){
+                    let cannon=this.m_cannonData[index].cannon;
+                    this.showCannonRange(cannon);
+                }
+            }
         }
     },
     onTouchEnd(event){
         if(this.m_curCopyConnon){
             this.recycleCannon(this.m_curCopyConnon);
             this.resetAllCannonOpacity();
+            this.hideCannonHit();
+            this.hideCannonRange();
 
             let nodePos=this.node.convertToNodeSpaceAR(event.getLocation());
             let index=this.getCannonIndexByNodePos(nodePos);
-            if(-1==index)return;
+            if(-1==index||index==this.m_curSelectedIndex)return;
             
             let data=this.m_cannonData[index];
             let selectedCannon=this.m_cannonData[this.m_curSelectedIndex].cannon;
@@ -180,6 +192,8 @@ cc.Class({
         if(this.m_curCopyConnon){
             this.recycleCannon(this.m_curCopyConnon);
             this.resetAllCannonOpacity();
+            this.hideCannonHit();
+            this.hideCannonRange();
         }
         this.m_curCopyConnon=null;
         this.m_curSelectedIndex=-1;
@@ -215,6 +229,35 @@ cc.Class({
         data.isMakeBuilded=false;
         this.recycleCannon(data.cannon);
         data.cannon=null;
+    },
+
+    showCannonHit(cannon){
+        for(let i=0;i<this.m_cannonData.length;i++){
+            if(this.m_cannonData[i].isMakeBuilded){
+                if(cannon.getComponent("cannon").isSynthetic(this.m_cannonData[i].cannon.getComponent("cannon"))){//合成
+                    this.m_cannonData[i].cannon.getComponent("cannon").showHit();
+                }
+            }
+        }
+    },
+    hideCannonHit(){
+        for(let i=0;i<this.m_cannonData.length;i++){
+            if(this.m_cannonData[i].isMakeBuilded){
+                this.m_cannonData[i].cannon.getComponent("cannon").hideHit();
+            }
+        }
+    },
+
+    showCannonRange(cannon){
+        this.hideCannonRange();
+        cannon.getComponent("cannon").showRange();
+    },
+    hideCannonRange(){
+        for(let i=0;i<this.m_cannonData.length;i++){
+            if(this.m_cannonData[i].isMakeBuilded){
+                this.m_cannonData[i].cannon.getComponent("cannon").hideRange();
+            }
+        }
     },
 
     start () {

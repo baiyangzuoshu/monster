@@ -13,7 +13,9 @@ cc.Class({
         m_padNode:cc.Node,
         m_gunAtlas:cc.SpriteAtlas,
         m_padAtlas:cc.SpriteAtlas,
-        m_levelLab:cc.Label
+        m_levelLab:cc.Label,
+        m_hit:cc.Node,
+        m_range:cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -27,6 +29,17 @@ cc.Class({
         this.m_curType=type;
         this.m_gunNode.angle=window.random(0,360);
         this.updateGunAndPadShow();
+        this.hideHit();
+        this.hideRange();
+    },
+
+    resetCannon(){
+        this.m_curLevel=1;
+        this.m_curType=0;
+        this.m_gunNode.angle=window.random(0,360);
+        this.updateGunAndPadShow();
+        this.hideHit();
+        this.hideRange();
     },
 
     addLevel(level){
@@ -49,6 +62,18 @@ cc.Class({
     },
     getCurType(){
         return this.m_curType;
+    },
+    showHit(){
+        this.m_hit.active=true;
+    },
+    hideHit(){
+        this.m_hit.active=false;
+    },
+    showRange(){
+        this.m_range.active=true;
+    },
+    hideRange(){
+        this.m_range.active=false;
     },
 
     updateGunAndPadShow(){
