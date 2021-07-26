@@ -156,7 +156,7 @@ cc.Class({
                 let cur_js=cannon.getComponent("cannon");
                 let selected_js=selectedCannon.getComponent("cannon");
                 if(cur_js.isSynthetic(selected_js)){//合成
-                    cur_js.addLevel(selected_js.getCurLevel());
+                    cur_js.levelUp();
                     this.resetCannonDataByIndex(this.m_curSelectedIndex);
                 }
                 else{//交换位置
@@ -263,6 +263,14 @@ cc.Class({
     start () {
 
     },
-
+/*测试
+*/
+    testTarget(monster){
+        for(let i=0;i<this.m_cannonData.length;i++){
+            if(this.m_cannonData[i].isMakeBuilded){
+                this.m_cannonData[i].cannon.getComponent("cannon").setTarget(monster);
+            }
+        }
+    },
     // update (dt) {},
 });

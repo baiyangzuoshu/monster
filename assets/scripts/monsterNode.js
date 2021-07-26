@@ -47,6 +47,8 @@ cc.Class({
         
         let js=monster.getComponent("monsterItem");
         js.init(pathList,type,index);
+
+        window.m_gCannonBuild.testTarget(monster);
     },
 
     updateMonster(){
