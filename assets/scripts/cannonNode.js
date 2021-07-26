@@ -69,7 +69,7 @@ cc.Class({
         let _y=this.m_cannonSp.y;
         let cannon=this.getCannon();
         let js=cannon.getComponent("cannon");
-        js.initCannon(1,window.random(0,6));
+        js.initCannon(0,window.random(0,6));
         cannon.x=_x;
         cannon.y=_y;
         cannon.parent=this.node;

@@ -15,7 +15,8 @@ cc.Class({
         m_padAtlas:cc.SpriteAtlas,
         m_levelLab:cc.Label,
         m_hit:cc.Node,
-        m_range:cc.Node
+        m_range:cc.Node,
+        m_gunPrefab:[cc.Prefab]
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -36,7 +37,7 @@ cc.Class({
 
     resetCannon(){
         this.m_target=null;
-        this.setCurLevel(1);
+        this.setCurLevel(0);
         this.setCurType(0);
         this.m_gunNode.angle=window.random(0,360);
         this.updateGunAndPadShow();
@@ -46,7 +47,7 @@ cc.Class({
 
     levelUp(){
         this.m_curLevel++;
-        this.m_levelLab.string=""+this.m_curLevel;
+        this.m_levelLab.string=""+(this.m_curLevel+1);
         this.updateGunAndPadShow();
     },
 
@@ -55,7 +56,7 @@ cc.Class({
     },
     setCurLevel(level){
         this.m_curLevel=parseInt(level);
-        this.m_levelLab.string=""+this.m_curLevel;
+        this.m_levelLab.string=""+(this.m_curLevel+1);
         this.updateGunAndPadShow();
     },
     setCurType(type){
@@ -79,9 +80,20 @@ cc.Class({
     },
 
     updateGunAndPadShow(){
+        if(this.m_gunSprite==null){
+            if(this.m_gunPrefab[this.m_curType]!=null){
+                this.m_gunSprite=cc.instantiate(this.m_gunPrefab[this.m_curType]);
+            }
+            else{
+                this.m_gunSprite=new cc.Node();
+                this.m_gunSprite.addComponent(cc.Sprite);
+            }
+            this.m_gunSprite.parent=this.m_gunNode;
+        }
+
         let gunName=""+this.m_curType+"_"+this.m_curLevel;
         let gunSpriteFrame=this.m_gunAtlas.getSpriteFrame(gunName);
-        let gunSprite=this.m_gunNode.getComponent(cc.Sprite);
+        let gunSprite=this.m_gunSprite.getComponent(cc.Sprite);
         gunSprite.spriteFrame=gunSpriteFrame;
 
         let padName=""+this.m_curType+"_"+Math.floor(this.m_curLevel%3);
