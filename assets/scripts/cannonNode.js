@@ -140,13 +140,17 @@ cc.Class({
     onTouchEnd(event){
         if(this.m_curCopyConnon){
             this.recycleCannon(this.m_curCopyConnon);
+            this.m_curCopyConnon=null;
             this.resetAllCannonOpacity();
             this.hideCannonHit();
             this.hideCannonRange();
 
             let nodePos=this.node.convertToNodeSpaceAR(event.getLocation());
             let index=this.getCannonIndexByNodePos(nodePos);
-            if(-1==index||index==this.m_curSelectedIndex)return;
+            if(-1==index||index==this.m_curSelectedIndex){
+                this.m_curSelectedIndex=-1;
+                return;
+            }
             
             let data=this.m_cannonData[index];
             let selectedCannon=this.m_cannonData[this.m_curSelectedIndex].cannon;
@@ -184,7 +188,7 @@ cc.Class({
                 this.resetCannonDataByIndex(this.m_curSelectedIndex);
             }
         }
-        this.m_curCopyConnon=null;
+        
         this.m_curSelectedIndex=-1;
         cc.log("touchend");
     },
