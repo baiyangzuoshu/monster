@@ -2,6 +2,7 @@
 window.m_gMapDataManager=null;
 window.m_gMonsterBuild=null;
 window.m_gCannonBuild=null;
+window.m_gCannonRange=230;
 
 //生成从minNum到maxNum的随机数
 window.random=function(minNum, maxNum) {

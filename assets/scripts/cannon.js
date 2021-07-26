@@ -25,9 +25,9 @@ cc.Class({
     },
 
     initCannon(level,type){
-        this.m_isSend=false;
         this.m_curLevel=level;
         this.m_curType=type;
+        this.m_target=null;
         this.m_gunNode.angle=window.random(0,360);
         this.updateGunAndPadShow();
         this.hideHit();
@@ -35,7 +35,7 @@ cc.Class({
     },
 
     resetCannon(){
-        this.m_isSend=false;
+        this.m_target=null;
         this.setCurLevel(1);
         this.setCurType(0);
         this.m_gunNode.angle=window.random(0,360);
@@ -100,28 +100,25 @@ cc.Class({
     },
 
     setTarget(target){
-        this.m_isSend=false;
         this.m_target=target;
     },
 
     update(dt){
+        if(null==this.m_target){
+            let target=m_gMonsterBuild.distanceCannonMinMonster(this.node);
+            this.setTarget(target);
+        }
+
         if(this.m_target){
-            let start=cc.v2(this.node.x,this.node.y);
-            let end=cc.v2(this.m_target.x,this.m_target.y);
-            let angle=window.getAngle(start,end)+360-90;
-            if(this.m_isSend){
+            //距离判断
+            let dis=Math.abs(window.getDistance(cc.v2(this.m_target.x,this.m_target.y),cc.v2(this.node.x,this.node.y)));
+            if(dis<window.m_gCannonRange){
+                let start=cc.v2(this.node.x,this.node.y);
+                let end=cc.v2(this.m_target.x,this.m_target.y);
+                let angle=window.getAngle(start,end)+360-90;
                 this.m_gunNode.angle=angle;
+                this.setTarget(null);
             }
-            else{
-                let curAngle=this.m_gunNode.angle;
-                curAngle+=100*dt;
-                if(curAngle>angle){
-                    curAngle=angle;
-                    this.m_isSend=true;
-                }
-                this.m_gunNode.angle=curAngle;
-            }
-           
         }
     },
 });

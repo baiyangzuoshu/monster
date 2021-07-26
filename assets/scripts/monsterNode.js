@@ -50,7 +50,7 @@ cc.Class({
         let js=monster.getComponent("monsterItem");
         js.init(pathList,type,index);
 
-        window.m_gCannonBuild.testTarget(monster);
+        //window.m_gCannonBuild.testTarget(monster);
     },
 
     updateMonster(){
@@ -64,6 +64,20 @@ cc.Class({
         for(let i=0;i<this.m_monsterArr.length;i++){
             this.m_monsterArr[i].zIndex=i;
         }
+    },
+
+    distanceCannonMinMonster(cannon){
+        let minMonster=null;
+        let minDis=9999;
+        for(let i=0;i<this.m_monsterArr.length;i++){
+           let monster=this.m_monsterArr[i];
+           let dis=Math.abs(window.getDistance(cc.v2(monster.x,monster.y),cc.v2(cannon.x,cannon.y)));
+           if(dis<window.m_gCannonRange&&dis<minDis){
+                minDis=dis;
+                minMonster=monster;
+           }
+        }
+        return minMonster;
     },
 
     start () {
