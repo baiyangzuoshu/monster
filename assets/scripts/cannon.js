@@ -29,7 +29,7 @@ cc.Class({
         this.m_curLevel=level;
         this.m_curType=type;
         this.m_target=null;
-        this.m_gunNode.angle=window.random(0,360);
+        this.setGunAngle(window.random(0,360));
         this.updateGunAndPadShow();
         this.hideHit();
         this.hideRange();
@@ -39,10 +39,16 @@ cc.Class({
         this.m_target=null;
         this.setCurLevel(0);
         this.setCurType(0);
-        this.m_gunNode.angle=window.random(0,360);
+        this.setGunAngle(window.random(0,360));
         this.updateGunAndPadShow();
         this.hideHit();
         this.hideRange();
+    },
+    setGunAngle(angle){
+        this.m_gunNode.angle=angle;
+    },
+    getGunAngle(){
+        return this.m_gunNode.angle;
     },
 
     levelUp(){
@@ -112,6 +118,7 @@ cc.Class({
     },
 
     setTarget(target){
+        this.m_isFire=false;
         this.m_target=target;
     },
 
@@ -122,13 +129,38 @@ cc.Class({
         }
 
         if(this.m_target){
+            let js=this.m_target.getComponent("monsterItem");
+            if(js.isDie()){
+                return this.setTarget(null);
+            }
             //距离判断
             let dis=Math.abs(window.getDistance(cc.v2(this.m_target.x,this.m_target.y),cc.v2(this.node.x,this.node.y)));
             if(dis<window.m_gCannonRange){
                 let start=cc.v2(this.node.x,this.node.y);
                 let end=cc.v2(this.m_target.x,this.m_target.y);
                 let angle=window.getAngle(start,end)+360-90;
-                this.m_gunNode.angle=angle;
+                if(this.m_isFire){
+                    this.setGunAngle(angle);
+                }
+                else{
+                    //炮台旋转动画
+                    let moveAngle=300*dt;
+                    if(this.getGunAngle()>angle//大于目标角度
+                        ||angle-this.getGunAngle()>180){//反方向
+                        moveAngle=-moveAngle;
+                    }
+
+                    this.setGunAngle(this.getGunAngle()+moveAngle);
+
+                    if(this.getGunAngle()<0)this.setGunAngle(this.getGunAngle()+360);//?
+                    
+                    if(Math.abs(this.getGunAngle()-angle)<Math.abs(moveAngle)){
+                        this.m_isFire=true;
+                        this.setGunAngle(angle);
+                    }
+                }
+            }
+            else{
                 this.setTarget(null);
             }
         }
