@@ -21,6 +21,7 @@ cc.Class({
     },
 
     init(pathList,type,index){
+        this.m_state=0;
         this.m_curPathIndex=0;
         
         let monster=this.node;
@@ -33,6 +34,13 @@ cc.Class({
         monster.y=-startPos.y*106-106/2;
 
         this.go(pathList,type,index);
+    },
+
+    setState(_state){
+        this.m_state=_state;
+    },
+    isDie(){
+        return this.m_state==-1;
     },
 
     go(pathList){
@@ -53,7 +61,12 @@ cc.Class({
                 this.monsterDirection(pathList[this.m_curPathIndex],pathList[++this.m_curPathIndex]);
             }).to(1,{position:cc.v2(_x,_y)});
         }
-        moveTo=moveTo.call(()=>{window.m_gMonsterBuild.recycleMonster(monster);});
+        moveTo=moveTo.call(()=>{
+            let js=monster.getComponent("monsterItem");
+            js.setState(-1);
+            
+            window.m_gMonsterBuild.recycleMonster(monster);
+        });
 
         cc.tween(monster).then(moveTo1).then(moveTo2).then(moveTo).start();
 
