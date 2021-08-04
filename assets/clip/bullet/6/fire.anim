@@ -20,11 +20,11 @@
         },
         {
           "frame": 0.4,
-          "value": -1
+          "value": -5
         },
         {
           "frame": 1,
-          "value": 0
+          "value": -1
         }
       ]
     },
@@ -71,8 +71,8 @@
   },
   "events": [
     {
-      "frame": 0.4,
-      "func": "",
+      "frame": 1,
+      "func": "over",
       "params": []
     }
   ]

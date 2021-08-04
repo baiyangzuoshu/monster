@@ -29,6 +29,7 @@ cc.Class({
         this.m_curLevel=level;
         this.m_curType=type;
         this.m_target=null;
+        this.m_gunSprite=null
         this.setGunAngle(window.random(0,360));
         this.updateGunAndPadShow();
         this.hideHit();
@@ -37,6 +38,7 @@ cc.Class({
 
     resetCannon(){
         this.m_target=null;
+        this.m_gunSprite=null
         this.setCurLevel(0);
         this.setCurType(0);
         this.setGunAngle(window.random(0,360));
@@ -63,11 +65,9 @@ cc.Class({
     setCurLevel(level){
         this.m_curLevel=parseInt(level);
         this.m_levelLab.string=""+(this.m_curLevel+1);
-        this.updateGunAndPadShow();
     },
     setCurType(type){
         this.m_curType=type;
-        this.updateGunAndPadShow();
     },
     getCurType(){
         return this.m_curType;
@@ -111,6 +111,7 @@ cc.Class({
     depthCopyData(cur_js){
         cur_js.setCurLevel(this.getCurLevel());
         cur_js.setCurType(this.getCurType());
+        cur_js.updateGunAndPadShow();
     },
 
     isSynthetic(cur_js){
@@ -120,6 +121,15 @@ cc.Class({
     setTarget(target){
         this.m_isFire=false;
         this.m_target=target;
+    },
+
+    beginFire(){
+        let js=this.m_gunSprite.getComponent("gun");
+        if(js)js.beginFire();
+    },
+    endFire(){
+        let js=this.m_gunSprite.getComponent("gun");
+        if(js)js.endFire();
     },
 
     update(dt){
@@ -157,6 +167,7 @@ cc.Class({
                     if(Math.abs(this.getGunAngle()-angle)<Math.abs(moveAngle)){
                         this.m_isFire=true;
                         this.setGunAngle(angle);
+                        this.beginFire();
                     }
                 }
             }
