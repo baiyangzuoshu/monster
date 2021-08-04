@@ -28,7 +28,7 @@ cc.Class({
     },
 
     over(){
-        //this.endFire();
+        this.endFire();
     },
 
     start () {
