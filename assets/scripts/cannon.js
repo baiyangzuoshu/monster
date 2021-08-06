@@ -125,11 +125,11 @@ cc.Class({
 
     beginFire(){
         let js=this.m_gunSprite.getComponent("gun");
-        if(js)js.beginFire();
+        if(js)js.beginFire(this.m_target);
     },
     endFire(){
         let js=this.m_gunSprite.getComponent("gun");
-        if(js)js.endFire();
+        if(js)js.endFire(this.m_target);
     },
 
     update(dt){

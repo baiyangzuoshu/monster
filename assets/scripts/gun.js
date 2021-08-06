@@ -9,7 +9,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-       m_fire:cc.Node
+       m_fire:cc.Node,
+       m_bullet:cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -18,21 +19,28 @@ cc.Class({
         this.m_animation=this.node.getComponent(cc.Animation)
     },
 
-    beginFire(){
+    beginFire(target){
+        this.m_target=target
         this.m_fire.active=true;
         this.m_animation.play("fire");
     },
-    endFire(){
+    endFire(target){
+        this.m_target=target;
         this.m_fire.active=false;
         this.m_animation.stop("fire");
     },
 
     over(){
-        this.endFire();
+        this.endFire(this.m_target);
+        this.createBullet()
+        this.m_target=null
     },
 
-    start () {
+    createBullet(){
+        let bullet=cc.instantiate(this.m_bullet)
+        bullet.m_target=this.m_target
 
+        m_gBulletBuild.createBullet(bullet,this.node)
     },
 
     // update (dt) {},
