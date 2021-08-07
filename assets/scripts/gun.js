@@ -40,7 +40,14 @@ cc.Class({
         let bullet=cc.instantiate(this.m_bullet)
         bullet.m_target=this.m_target
 
-        m_gBulletBuild.createBullet(bullet,this.node)
+        let worldPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
+        let nodePos=window.m_gBulletBuild.node.convertToNodeSpaceAR(worldPos)
+        var angle = window.getAngle(bullet.getPosition(),nodePos)
+        bullet.setPosition(nodePos)
+        bullet.active=true
+        bullet.parent=window.m_gBulletBuild.node
+        bullet.isDie=false
+        bullet.angle=angle
     },
 
     // update (dt) {},
