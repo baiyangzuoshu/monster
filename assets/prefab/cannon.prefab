@@ -1283,7 +1283,9 @@
     },
     "m_gunPrefab": [
       null,
-      null,
+      {
+        "__uuid__": "c62a180d-0061-42c7-a3e6-33927e401a4e"
+      },
       null,
       null,
       null,
