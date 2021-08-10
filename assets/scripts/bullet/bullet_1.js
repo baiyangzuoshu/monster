@@ -31,7 +31,6 @@ cc.Class({
                 this.m_bullet[i].active=false
             }else{
                 let d=dis/arr[i]
-                //console.log("bullet_1 init",d,dis,arr[i])
                 this.m_bullet[i].width*=d
                 this.m_bullet[i].height*=d
                 this.m_bullet[i].active=true

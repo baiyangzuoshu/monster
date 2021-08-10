@@ -9,9 +9,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-       m_fire:cc.Node,
-       m_bullet:cc.Node,
-       m_buuletEffect:cc.Node
+       m_bulletNode:cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -22,13 +20,11 @@ cc.Class({
 
     beginFire(target){
         this.m_target=target
-        this.m_fire.active=true;
-        this.m_animation.play("fire");
+        this.m_animation.play("action")
     },
     endFire(target){
-        this.m_target=target;
-        this.m_fire.active=false;
-        this.m_animation.stop("fire");
+        this.m_target=target
+        this.m_animation.stop("action")
     },
 
     over(){
@@ -38,13 +34,8 @@ cc.Class({
     },
 
     createBullet(){
-        let bullet=cc.instantiate(this.m_bullet)
+        let bullet=cc.instantiate(this.m_bulletNode)
         bullet.m_target=this.m_target
-        let targetPos=this.m_target.convertToWorldSpaceAR(cc.v2(0,0))
-        let gunPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
-        let dis=Math.abs(window.getDistance(targetPos,gunPos));//距离判断
-        let js=bullet.getComponent("bullet_1")
-        js.init(dis)
 
         let worldPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
         let nodePos=window.m_gBulletBuild.node.convertToNodeSpaceAR(worldPos)
@@ -52,7 +43,8 @@ cc.Class({
         bullet.setPosition(nodePos)
         bullet.active=true
         bullet.parent=window.m_gBulletBuild.node
-        bullet.angle=angle-90
+        bullet.isDie=false
+        bullet.angle=angle
     },
 
     // update (dt) {},
