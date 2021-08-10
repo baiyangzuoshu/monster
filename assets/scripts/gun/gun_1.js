@@ -10,7 +10,8 @@ cc.Class({
 
     properties: {
        m_fire:cc.Node,
-       m_bullet:cc.Node
+       m_bullet:cc.Node,
+       m_buuletEffect:cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -39,6 +40,12 @@ cc.Class({
     createBullet(){
         let bullet=cc.instantiate(this.m_bullet)
         bullet.m_target=this.m_target
+        let targetPos=this.m_target.convertToWorldSpaceAR(cc.v2(0,0))
+        let gunPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
+        let dis=Math.abs(window.getDistance(targetPos,gunPos));//距离判断
+        console.log("createBullet",dis)
+        let js=bullet.getComponent("bullet_1")
+        js.init(dis)
 
         let worldPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
         let nodePos=window.m_gBulletBuild.node.convertToNodeSpaceAR(worldPos)
@@ -46,8 +53,7 @@ cc.Class({
         bullet.setPosition(nodePos)
         bullet.active=true
         bullet.parent=window.m_gBulletBuild.node
-        bullet.isDie=false
-        bullet.angle=angle
+        bullet.angle=angle-90
     },
 
     // update (dt) {},

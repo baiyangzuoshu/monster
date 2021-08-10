@@ -165,6 +165,7 @@ cc.Class({
                     if(this.getGunAngle()<0)this.setGunAngle(this.getGunAngle()+360);//?
                     
                     if(Math.abs(this.getGunAngle()-angle)<Math.abs(moveAngle)){
+                        console.log("cannon pdate",dis)
                         this.m_isFire=true;
                         this.setGunAngle(angle);
                         this.beginFire();

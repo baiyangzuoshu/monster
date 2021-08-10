@@ -4,8 +4,8 @@
   "_objFlags": 0,
   "_native": "",
   "_duration": 1,
-  "sample": 5,
-  "speed": 1,
+  "sample": 9,
+  "speed": 2,
   "wrapMode": 1,
   "curveData": {
     "comps": {
@@ -14,31 +14,55 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "7565781c-51ac-427f-9066-b88da6711eda"
+              "__uuid__": "899cdb56-44c3-45b3-bae4-4a6ad830ce26"
             }
           },
           {
-            "frame": 0.2,
+            "frame": 0.1111111111111111,
             "value": {
-              "__uuid__": "4e0ad856-ac16-4b4e-866b-3df0b962478c"
+              "__uuid__": "262c0478-ab9c-4034-a4d8-7ecfc060600f"
             }
           },
           {
-            "frame": 0.4,
+            "frame": 0.2222222222222222,
             "value": {
-              "__uuid__": "adcc1fc0-7daf-4fcf-ab68-9f360bc31ed6"
+              "__uuid__": "beb1d73c-d10c-4320-ba2e-b3a4fb908502"
             }
           },
           {
-            "frame": 0.6,
+            "frame": 0.3333333333333333,
             "value": {
-              "__uuid__": "1fddde26-b749-4f06-9768-33f1084f0a8b"
+              "__uuid__": "608f3b59-3247-4e2f-b09d-a6b9cfe53c0d"
             }
           },
           {
-            "frame": 0.8,
+            "frame": 0.4444444444444444,
             "value": {
-              "__uuid__": "0cf4b9b8-0a6d-45b0-886a-f6db73f7ba75"
+              "__uuid__": "c453db1b-0cb4-4f5e-a568-3309035e1e9f"
+            }
+          },
+          {
+            "frame": 0.5555555555555556,
+            "value": {
+              "__uuid__": "3e13efeb-7058-4017-a917-0ed72282a4c4"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "cbf1f170-7498-4980-833d-68744e8fd627"
+            }
+          },
+          {
+            "frame": 0.7777777777777778,
+            "value": {
+              "__uuid__": "0c5bfdba-77b9-4d5d-b445-f1e777a45565"
+            }
+          },
+          {
+            "frame": 0.8888888888888888,
+            "value": {
+              "__uuid__": "0b952db2-e7b0-472a-b26d-0f37c93fc62c"
             }
           }
         ]
