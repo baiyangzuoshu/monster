@@ -29,11 +29,15 @@ cc.Class({
         let spriteFrame=this.m_monsterAtlasArr[type].getSpriteFrame(index);
         this.m_monsterSp[0].spriteFrame=spriteFrame;
         this.m_monsterSp[1].spriteFrame=spriteFrame;
-
+        let width=this.m_monsterSp[0].node.width
+        let height=this.m_monsterSp[0].node.height
         monster.x=startPos.x*106+106/2;
         monster.y=-startPos.y*106-106/2;
 
         this.go(pathList,type,index);
+
+        let js=this.m_monsterNode.getComponent("collider_3")
+        js.updateBoxCollider(width,height)
     },
 
     setState(_state){

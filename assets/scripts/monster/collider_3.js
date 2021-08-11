@@ -15,9 +15,18 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        var manager = cc.director.getCollisionManager();
-        manager.enabled = true;
-        manager.enabledDebugDraw = true;
+
+    },
+
+    onCollisionEnter: function (other, self) {
+        //console.log("onCollisionEnter monster")
+    },
+
+    updateBoxCollider(w,h){
+        let boxCollider=this.node.getComponent(cc.BoxCollider)
+        boxCollider.size.width=w*1/3
+        boxCollider.size.height=h*1/3
+        boxCollider.offset.y=h/2
     },
 
     start () {
