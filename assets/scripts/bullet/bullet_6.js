@@ -22,29 +22,28 @@ cc.Class({
 
     },
 
+    onCollisionEnter: function (other, self) {
+        let bullet=this.node
+        let animation=bullet.getComponent(cc.Animation)
+        animation.play("effect")
+        cc.tween(bullet)//帧事件回调有问题，改为缓动动画
+            .delay(0.5)
+            .call(()=>{
+                animation.stop("effect")
+                this.isDie=true
+
+                bullet.removeFromParent()
+            })
+            .start()
+    },
+
     update (dt) {
         let move=200*dt
         let bullet=this.node
         let target=bullet.m_target
         if(!target||this.isDie)return
 
-        let js=target.getComponent("monsterItem")
         let targetPos=window.m_gBulletBuild.node.convertToNodeSpaceAR(target.convertToWorldSpaceAR(cc.v2(0,0)))
-        let target_rect=new cc.Rect(targetPos.x,targetPos.y,target.width,target.height)
-        if(target_rect.contains(new cc.v2(bullet.x,bullet.y))||js.isDie()){
-            let animation=bullet.getComponent(cc.Animation)
-            animation.play("effect")
-            cc.tween(bullet)//帧事件回调有问题，改为缓动动画
-                .delay(0.5)
-                .call(()=>{
-                    animation.stop("effect")
-                    this.isDie=true
-
-                    bullet.removeFromParent()
-                })
-                .start()
-            return
-        }
         //转向角度
         var angle = window.getAngle(bullet.getPosition(),targetPos);
         //数学公式计算

@@ -71,7 +71,7 @@
   },
   "events": [
     {
-      "frame": 1,
+      "frame": 0.4,
       "func": "over",
       "params": []
     }
