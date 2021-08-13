@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "fire",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1,
+  "sample": 5,
+  "speed": 2,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "f096e355-947c-4c75-a45e-4c889d21e4e7"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "a9a0ab7b-d51b-4a1b-ad62-bd188fa97131"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "3d1d527c-7933-4f97-b937-0d5e1e3265f5"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "ff6c5402-c5fd-45d6-bcb5-4ccd907da791"
+            }
+          },
+          {
+            "frame": 0.8,
+            "value": {
+              "__uuid__": "14d4a523-d82c-46be-94eb-60735b4d8e1e"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
