@@ -50,4 +50,51 @@ window.getDistance=function(start,end){
     var dis = Math.sqrt(pos.x*pos.x + pos.y * pos.y);
     return dis;
 }
+
+function createGlobalData(){
+  var obj = new Object();
+
+  obj.cannonUpLevel = [
+      //圆炮
+      {type:6,level:0,atk:1},//0
+      {type:6,level:1,atk:10},//1
+      {type:6,level:2,atk:80},//2
+      //闪电炮
+      {type:1,level:0,atk:180},//3
+      {type:1,level:1,atk:260},//4
+      {type:1,level:2,atk:540},//5
+      //导弹炮
+      {type:3,level:0,atk:680},//6
+      {type:3,level:1,atk:780},
+      {type:3,level:2,atk:960},
+      //音波炮
+      {type:4,level:0,atk:1100},//10
+      {type:4,level:1,atk:1200},
+      {type:4,level:2,atk:1350},
+      //紫光炮
+      {type:2,level:0,atk:1300},//13
+      {type:2,level:1,atk:1550},
+      {type:2,level:2,atk:1680},
+      
+      //激光炮
+      {type:0,level:0,atk:1980},//16
+      {type:0,level:1,atk:2200},
+      {type:0,level:2,atk:2800},
+      
+      //圆炮
+      {type:6,level:3,atk:3800},//19
+      {type:6,level:4,atk:4800},//
+      {type:6,level:5,atk:6800},//
+      
+      //闪电炮
+      {type:1,level:3,atk:9800},//22
+      {type:1,level:4,atk:13500},//
+      {type:1,level:5,atk:17000},//
+  ];
+
+
+  return obj;
+}
+
+window.g_GlobalData = createGlobalData();
   

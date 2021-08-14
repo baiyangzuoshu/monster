@@ -25,9 +25,8 @@ cc.Class({
        
     },
 
-    initCannon(level,type){
+    initCannon(level){
         this.m_curLevel=level;
-        this.m_curType=type;
         this.m_target=null;
         this.m_gunSprite=null
         this.setGunAngle(window.random(0,360));
@@ -40,7 +39,6 @@ cc.Class({
         this.m_target=null;
         this.m_gunSprite=null
         this.setCurLevel(0);
-        this.setCurType(0);
         this.setGunAngle(window.random(0,360));
         this.updateGunAndPadShow();
         this.hideHit();
@@ -55,7 +53,6 @@ cc.Class({
 
     levelUp(){
         this.m_curLevel++;
-        this.m_levelLab.string=""+(this.m_curLevel+1);
         this.updateGunAndPadShow();
     },
 
@@ -64,14 +61,8 @@ cc.Class({
     },
     setCurLevel(level){
         this.m_curLevel=parseInt(level);
-        this.m_levelLab.string=""+(this.m_curLevel+1);
     },
-    setCurType(type){
-        this.m_curType=type;
-    },
-    getCurType(){
-        return this.m_curType;
-    },
+    
     showHit(){
         this.m_hit.active=true;
     },
@@ -86,9 +77,13 @@ cc.Class({
     },
 
     updateGunAndPadShow(){
+        let data=window.g_GlobalData.cannonUpLevel
+        let type=data[this.m_curLevel].type
+        let level=data[this.m_curLevel].level
+
         if(this.m_gunSprite==null){
-            if(this.m_gunPrefab[this.m_curType]!=null){
-                this.m_gunSprite=cc.instantiate(this.m_gunPrefab[this.m_curType]);
+            if(this.m_gunPrefab[type]!=null){
+                this.m_gunSprite=cc.instantiate(this.m_gunPrefab[type]);
             }
             else{
                 this.m_gunSprite=new cc.Node();
@@ -97,12 +92,13 @@ cc.Class({
             this.m_gunSprite.parent=this.m_gunNode;
         }
 
-        let gunName=""+this.m_curType+"_"+this.m_curLevel;
+        this.m_levelLab.string=""+(level+1);
+        let gunName=""+type+"_"+level;
         let gunSpriteFrame=this.m_gunAtlas.getSpriteFrame(gunName);
         let gunSprite=this.m_gunSprite.getComponent(cc.Sprite);
         gunSprite.spriteFrame=gunSpriteFrame;
 
-        let padName=""+this.m_curType+"_"+Math.floor(this.m_curLevel%3);
+        let padName=""+type+"_"+level;
         let padSpriteFrame=this.m_padAtlas.getSpriteFrame(padName);
         let padSprite=this.m_padNode.getComponent(cc.Sprite);
         padSprite.spriteFrame=padSpriteFrame;
@@ -110,12 +106,11 @@ cc.Class({
 
     depthCopyData(cur_js){
         cur_js.setCurLevel(this.getCurLevel());
-        cur_js.setCurType(this.getCurType());
         cur_js.updateGunAndPadShow();
     },
 
     isSynthetic(cur_js){
-       return cur_js.getCurType()==this.getCurType()&&cur_js.getCurLevel()==this.getCurLevel();
+       return cur_js.getCurLevel()==this.getCurLevel();
     },
 
     setTarget(target){
@@ -125,13 +120,17 @@ cc.Class({
 
     beginFire(){
         if(this.m_gunSprite){
-            let js=this.m_gunSprite.getComponent("gun_"+this.m_curType);
+            let data=window.g_GlobalData.cannonUpLevel
+            let type=data[this.m_curLevel].type
+            let js=this.m_gunSprite.getComponent("gun_"+type);
             if(js)js.beginFire(this.m_target);
         }
     },
     endFire(){
         if(this.m_gunSprite){
-            let js=this.m_gunSprite.getComponent("gun_"+this.m_curType);
+            let data=window.g_GlobalData.cannonUpLevel
+            let type=data[this.m_curLevel].type
+            let js=this.m_gunSprite.getComponent("gun_"+type);
             if(js)js.endFire(this.m_target);
         }
     },

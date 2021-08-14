@@ -32,7 +32,8 @@ cc.Class({
     recycleMonster(monster){
         let index=this.m_monsterArr.indexOf(monster);
         this.m_monsterArr.splice(index,1);
-        this.m_monsterPool.put(monster);
+        monster.opacity=0
+       // this.m_monsterPool.put(monster);
     },
 
     build(){
