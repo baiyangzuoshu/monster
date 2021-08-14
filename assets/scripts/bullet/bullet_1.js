@@ -46,7 +46,8 @@ cc.Class({
                         bullet.removeFromParent()
                     })
                     .start()
-                }
+                break
+            }
         }
     },
 

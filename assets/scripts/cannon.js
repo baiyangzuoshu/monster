@@ -124,12 +124,16 @@ cc.Class({
     },
 
     beginFire(){
-        let js=this.m_gunSprite.getComponent("gun_"+this.m_curType);
-        if(js)js.beginFire(this.m_target);
+        if(this.m_gunSprite){
+            let js=this.m_gunSprite.getComponent("gun_"+this.m_curType);
+            if(js)js.beginFire(this.m_target);
+        }
     },
     endFire(){
-        let js=this.m_gunSprite.getComponent("gun_"+this.m_curType);
-        if(js)js.endFire(this.m_target);
+        if(this.m_gunSprite){
+            let js=this.m_gunSprite.getComponent("gun_"+this.m_curType);
+            if(js)js.endFire(this.m_target);
+        }
     },
 
     update(dt){
