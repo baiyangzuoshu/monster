@@ -15,10 +15,13 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
+        this.m_gkLevel=1
+        this.m_monsterIndex=0
         window.m_gMonsterBuild=this;
         this.m_monsterArr=[];
         this.m_monsterPool=new cc.NodePool();
-        this.schedule(this.updateMonster,1.0);
+        this.schedule(this.updateMonsterZIndex,1.0);
+        this.schedule(this.monsterAutoBuild,1.0)
     },
 
     createMonster(){
@@ -34,6 +37,18 @@ cc.Class({
         this.m_monsterArr.splice(index,1);
         monster.opacity=0
        // this.m_monsterPool.put(monster);
+    },
+
+    monsterAutoBuild(){
+        let pathList=window.m_gMapDataManager.getPathData()
+        let levelDesign=window.g_GlobalData.levelDesign
+        let data=levelDesign.getLevelData(this.m_gkLevel)
+        let curData=data[this.m_monsterIndex++]
+        let type=curData.type
+        let index=curData.id
+        this.buildMonster(pathList,type,index);
+        if(this.m_monsterIndex>=data.length)
+            this.m_monsterIndex=0
     },
 
     build(){
@@ -54,7 +69,7 @@ cc.Class({
         //window.m_gCannonBuild.testTarget(monster);
     },
 
-    updateMonster(){
+    updateMonsterZIndex(){
         this.m_monsterArr.sort((a,b)=>{
             if(a.y>b.y){
                 return -1;

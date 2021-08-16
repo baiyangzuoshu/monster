@@ -11,6 +11,8 @@ cc.Class({
     properties: {
         m_monsterNode:cc.Node,
         m_monsterSp:[cc.Sprite],
+        m_hpProgressBar:cc.ProgressBar,
+        m_hpNode:cc.Node,
         m_monsterAtlasArr:[cc.SpriteAtlas]
     },
 
@@ -38,6 +40,10 @@ cc.Class({
 
         let js=this.m_monsterNode.getComponent("collider_3")
         js.updateBoxCollider(width,height)
+        
+        this.m_hpProgressBar.node.y=width
+        this.m_hpProgressBar.totalLength=width
+        this.m_hpNode.width=width
     },
 
     setState(_state){
