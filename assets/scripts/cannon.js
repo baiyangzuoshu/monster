@@ -122,16 +122,18 @@ cc.Class({
         if(this.m_gunSprite){
             let data=window.g_GlobalData.cannonUpLevel
             let type=data[this.m_curLevel].type
+            let atk=data[this.m_curLevel].atk
             let js=this.m_gunSprite.getComponent("gun_"+type);
-            if(js)js.beginFire(this.m_target);
+            if(js)js.beginFire(this.m_target,atk);
         }
     },
     endFire(){
         if(this.m_gunSprite){
             let data=window.g_GlobalData.cannonUpLevel
             let type=data[this.m_curLevel].type
+            let atk=data[this.m_curLevel].atk
             let js=this.m_gunSprite.getComponent("gun_"+type);
-            if(js)js.endFire(this.m_target);
+            if(js)js.endFire(this.m_target,atk);
         }
     },
 

@@ -18,9 +18,12 @@ cc.Class({
         this.m_animation=this.node.getComponent(cc.Animation)
     },
 
-    beginFire(target){
+    beginFire(target,atk){
+        this.m_atk=atk
         let bullet=cc.instantiate(this.m_bullet)
         bullet.m_target=target
+        let js=bullet.getComponent("bullet_4")
+        js.setAtk(atk)
 
         let worldPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
         let nodePos=window.m_gBulletBuild.node.convertToNodeSpaceAR(worldPos)

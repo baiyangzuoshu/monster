@@ -22,9 +22,30 @@ cc.Class({
         this.m_curPathIndex=0;
     },
 
-    init(pathList,type,index){
+    updateHpProgressBar(){
+        let precent=this.m_curHp/this.m_maxHp
+        this.m_hpProgressBar.progress=precent
+    },
+
+    hit(hp){
+        this.m_curHp-=Math.abs(hp)
+        this.updateHpProgressBar()
+
+        if(this.m_curHp<=0){
+            this.m_curHp=0
+            this.m_maxHp=0
+            let monster=this.node;
+            this.setState(-1)
+            monster.stopAllActions()
+            window.m_gMonsterBuild.recycleMonster(monster)
+        }
+    },
+
+    init(pathList,type,index,hp,speed){
         this.m_state=0;
         this.m_curPathIndex=0;
+        this.m_curHp=hp
+        this.m_maxHp=hp
         
         let monster=this.node;
         let startPos=pathList[0];
@@ -36,7 +57,7 @@ cc.Class({
         monster.x=startPos.x*106+106/2;
         monster.y=-startPos.y*106-106/2;
 
-        this.go(pathList,type,index);
+        this.go(pathList,speed);
 
         let js=this.m_monsterNode.getComponent("collider_3")
         js.updateBoxCollider(width,height)
@@ -53,15 +74,16 @@ cc.Class({
         return this.m_state==-1;
     },
 
-    go(pathList){
+    go(pathList,speed){
         let monster=this.node;
+        let time=1-0.5*speed
 
         let _x=pathList[1].x*106;
         let _y = -pathList[1].y * 106 ;
         let moveTo1 = cc.tween().call(()=>{
             this.monsterDirection(pathList[this.m_curPathIndex],pathList[++this.m_curPathIndex]);
-        }).to(0.5, { scale: 1.2,position: cc.v2(_x, _y) });
-        let moveTo2 = cc.tween().to(0.5, { scale: 1.0,position: cc.v2(_x+106/2, _y- 106 / 2) })
+        }).to(time, { scale: 1.2,position: cc.v2(_x, _y) });
+        let moveTo2 = cc.tween().to(time, { scale: 1.0,position: cc.v2(_x+106/2, _y- 106 / 2) })
 
         let moveTo=cc.tween()
         for(let i=2;i<pathList.length;i++){
@@ -72,15 +94,13 @@ cc.Class({
             }).to(1,{position:cc.v2(_x,_y)});
         }
         moveTo=moveTo.call(()=>{
-            let js=monster.getComponent("monsterItem");
-            js.setState(-1);
-            
+            this.setState(-1);
             window.m_gMonsterBuild.recycleMonster(monster);
         });
 
         cc.tween(monster).then(moveTo1).then(moveTo2).then(moveTo).start();
 
-        let jumpTo=cc.tween().repeatForever(cc.tween().to(0.5,{scale:1.2}).to(0.5,{scale:1.0}));
+        let jumpTo=cc.tween().repeatForever(cc.tween().to(time,{scale:1.2}).to(time,{scale:1.0}));
         cc.tween(this.m_monsterNode).then(jumpTo).start();
     },
 

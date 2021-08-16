@@ -4,9 +4,10 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+let bulletBase=require("../bulletBase")
 
 cc.Class({
-    extends: cc.Component,
+    extends: bulletBase,
 
     properties: {
         m_fire:cc.Node,
@@ -18,9 +19,9 @@ cc.Class({
     onLoad () {
         this.isDie=false
         this.m_fire.active=true
-        let width=this.m_buffet.width
-        let height=this.m_buffet.height
-        this.updateBoxCollider(width,height)
+        let w=this.m_buffet.width
+        let h=this.m_buffet.height
+        this.updateBoxCollider(w,h)
     },
 
     updateBoxCollider(w,h){
@@ -42,7 +43,7 @@ cc.Class({
             .call(()=>{
                 animation.stop("effect")
                 this.isDie=true
-
+                this.hit(this.getAtk(),this.node.m_target)
                 bullet.removeFromParent()
             })
             .start()

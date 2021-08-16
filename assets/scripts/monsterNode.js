@@ -46,7 +46,9 @@ cc.Class({
         let curData=data[this.m_monsterIndex++]
         let type=curData.type
         let index=curData.id
-        this.buildMonster(pathList,type,index);
+        let hp=curData.hp
+        let speed=curData.speed
+        this.buildMonster(pathList,type,index,hp,speed);
         if(this.m_monsterIndex>=data.length)
             this.m_monsterIndex=0
     },
@@ -58,15 +60,13 @@ cc.Class({
         this.buildMonster(pathList,type,index);
     },
 
-    buildMonster(pathList,type,index){
+    buildMonster(pathList,type,index,hp,speed){
         let monster=this.createMonster();
         monster.parent=this.node
         this.m_monsterArr.push(monster);
         
         let js=monster.getComponent("monsterItem");
-        js.init(pathList,type,index);
-
-        //window.m_gCannonBuild.testTarget(monster);
+        js.init(pathList,type,index,hp,speed);
     },
 
     updateMonsterZIndex(){

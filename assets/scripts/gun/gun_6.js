@@ -19,19 +19,21 @@ cc.Class({
         this.m_animation=this.node.getComponent(cc.Animation)
     },
 
-    beginFire(target){
+    beginFire(target,atk){
         this.m_target=target
+        this.m_atk=atk
         this.m_fire.active=true;
         this.m_animation.play("fire");
     },
-    endFire(target){
+    endFire(target,atk){
         this.m_target=target;
+        this.m_atk=atk
         this.m_fire.active=false;
         this.m_animation.stop("fire");
     },
 
     over(){
-        this.endFire(this.m_target);
+        this.endFire(this.m_target,this.m_atk);
         this.createBullet()
         this.m_target=null
     },
@@ -39,6 +41,8 @@ cc.Class({
     createBullet(){
         let bullet=cc.instantiate(this.m_bullet)
         bullet.m_target=this.m_target
+        let js=bullet.getComponent("bullet_6")
+        js.setAtk(this.m_atk)
 
         let worldPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
         let nodePos=window.m_gBulletBuild.node.convertToNodeSpaceAR(worldPos)

@@ -17,7 +17,9 @@ cc.Class({
     onLoad () {
     },
 
-    beginFire(target){
+    beginFire(target,atk){
+        this.m_atk=atk
+
         let bullet=cc.instantiate(this.m_bullet)
         bullet.m_target=target
         let targetPos=target.convertToWorldSpaceAR(cc.v2(0,0))
@@ -25,6 +27,7 @@ cc.Class({
         let dis=Math.abs(window.getDistance(targetPos,gunPos));//距离判断
         dis+=target.width/2
         let js=bullet.getComponent("bullet_0")
+        js.setAtk(atk)
         js.init(dis)
 
         let worldPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))

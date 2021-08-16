@@ -20,19 +20,22 @@ cc.Class({
         this.m_animation=this.node.getComponent(cc.Animation)
     },
 
-    beginFire(target){
+    beginFire(target,atk){
+        this.m_atk=atk
         this.m_target=target
         this.m_fire.active=true;
         this.m_animation.play("fire");
+        
     },
-    endFire(target){
+    endFire(target,atk){
+        this.m_atk=atk
         this.m_target=target;
         this.m_fire.active=false;
         this.m_animation.stop("fire");
     },
 
     over(){
-        this.endFire(this.m_target);
+        this.endFire(this.m_target,this.m_atk);
         this.createBullet()
         this.m_target=null
     },
@@ -44,6 +47,7 @@ cc.Class({
         let gunPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))
         let dis=Math.abs(window.getDistance(targetPos,gunPos));//距离判断
         let js=bullet.getComponent("bullet_1")
+        js.setAtk(this.m_atk)
         js.init(dis)
 
         let worldPos=this.node.convertToWorldSpaceAR(cc.v2(0,0))

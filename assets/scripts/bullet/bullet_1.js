@@ -4,9 +4,10 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+let bulletBase=require("../bulletBase")
 
 cc.Class({
-    extends: cc.Component,
+    extends: bulletBase,
 
     properties: {
         m_bullet:[cc.Node],
@@ -42,6 +43,7 @@ cc.Class({
                     .delay(0.5)
                     .call(()=>{
                         this.isDie=true
+                        this.hit(this.getAtk(),this.node.m_target)
                         this.m_effect.removeFromParent()
                         bullet.removeFromParent()
                     })
