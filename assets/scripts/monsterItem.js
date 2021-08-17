@@ -37,6 +37,7 @@ cc.Class({
             let monster=this.node;
             this.setState(-1)
             monster.stopAllActions()
+            window.m_gBulletEffect.createEffect(monster.getPosition())
             window.m_gMonsterBuild.recycleMonster(monster)
         }
     },
