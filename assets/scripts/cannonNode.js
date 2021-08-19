@@ -80,7 +80,9 @@ cc.Class({
         //action
         let endPos=cc.v2(data.x*106+106/2,-data.y*106-106/2);
         cc.tween(cannon).to(0.4,{scale:4}).to(0.4,{scale:1}).delay(0.2).start();
-        cc.tween(cannon).to(1.0,{position:endPos}).start();
+        cc.tween(cannon).to(1.0,{position:endPos}).call(()=>{
+            js.resetBuildingState()
+        }).start()
 
         return true;
     },
@@ -90,6 +92,56 @@ cc.Class({
             if(this.m_cannonData[i].isMakeBuilded){
                 this.m_cannonData[i].isMakeBuilded=false;
                 this.recycleCannon(this.m_cannonData[i].cannon);
+            }
+        }
+    },
+
+    autoSynthetic(){
+        let levelObj={}
+        for(let i=0;i<this.m_cannonData.length;i++){
+            if(this.m_cannonData[i].isMakeBuilded){
+                let js=this.m_cannonData[i].cannon.getComponent("cannon")
+                if(!levelObj.hasOwnProperty(js.getCurLevel())){
+                    levelObj[js.getCurLevel()]=0
+                }
+                levelObj[js.getCurLevel()]++
+            }
+        }
+
+        let levelArr=[]
+        for(let i in levelObj ){
+            if(levelObj[i]<2)
+                continue//两个以上参与排序
+
+            levelArr.push({
+                level:parseInt(i),
+                count:parseInt(levelObj[i])
+            })
+        }
+
+        if(levelArr.length<=0)
+            return//没有可以合成的目标
+
+        levelArr.sort((a,b)=>{
+            return a.level>b.level//自动合成从最小等级开始
+        })
+
+        //console.log(JSON.stringify(levelObj))
+        //console.log(JSON.stringify(levelArr))
+
+        for(let i=0;i<this.m_cannonData.length;i++){
+            if(this.m_cannonData[i].isMakeBuilded){
+                for(let j=0;j<this.m_cannonData.length;j++){
+                    if(i!=j&&this.m_cannonData[j].isMakeBuilded){
+                        let selected_js=this.m_cannonData[i].cannon.getComponent("cannon");
+                        let target_js=this.m_cannonData[j].cannon.getComponent("cannon");
+                        if(target_js.isSynthetic(selected_js)&&levelArr[0].level==target_js.getCurLevel()){//等级相同可以合成
+                            target_js.levelUp()
+                            this.resetCannonDataByIndex(i);
+                            return
+                        }
+                    }
+                }
             }
         }
     },
@@ -157,10 +209,10 @@ cc.Class({
 
             if(data.isMakeBuilded){
                 let cannon=data.cannon;
-                let cur_js=cannon.getComponent("cannon");
+                let target_js=cannon.getComponent("cannon");
                 let selected_js=selectedCannon.getComponent("cannon");
-                if(cur_js.isSynthetic(selected_js)){//合成
-                    cur_js.levelUp();
+                if(target_js.isSynthetic(selected_js)){//合成
+                    target_js.levelUp();
                     this.resetCannonDataByIndex(this.m_curSelectedIndex);
                 }
                 else{//交换位置
@@ -181,16 +233,15 @@ cc.Class({
                 data.cannon=cannon;
                 data.isMakeBuilded=true;
 
-                let cur_js=cannon.getComponent("cannon");
+                let target_js=cannon.getComponent("cannon");
                 let selected_js=selectedCannon.getComponent("cannon"); 
-                selected_js.depthCopyData(cur_js);
+                selected_js.depthCopyData(target_js);
 
                 this.resetCannonDataByIndex(this.m_curSelectedIndex);
             }
         }
         
         this.m_curSelectedIndex=-1;
-        cc.log("touchend");
     },
     onTouchCancel(event){
         if(this.m_curCopyConnon){

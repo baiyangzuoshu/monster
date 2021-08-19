@@ -59,10 +59,6 @@ cc.Class({
         this.updateMakeTab();
     },
 
-    start () {
-
-    },
-
     update(dt) {
         if (this.m_curMakeCount < this.m_maxMakeCount) {
             this.m_makeSp.height += 50 * dt;

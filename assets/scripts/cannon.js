@@ -26,6 +26,7 @@ cc.Class({
     },
 
     initCannon(level){
+        this.m_buildingState=1
         this.m_curLevel=level;
         this.m_target=null;
         this.m_gunSprite=null
@@ -36,6 +37,7 @@ cc.Class({
     },
 
     resetCannon(){
+        this.m_buildingState=-1
         this.m_target=null;
         this.m_gunSprite=null
         this.setCurLevel(0);
@@ -43,6 +45,12 @@ cc.Class({
         this.updateGunAndPadShow();
         this.hideHit();
         this.hideRange();
+    },
+    isBuildingState(){
+        return 1==this.m_buildingState
+    },
+    resetBuildingState(){
+        this.m_buildingState=0
     },
     setGunAngle(angle){
         this.m_gunNode.angle=angle;
@@ -138,6 +146,9 @@ cc.Class({
     },
 
     update(dt){
+        if(this.isBuildingState())
+            return//正在建造中
+            
         if(null==this.m_target){
             let target=m_gMonsterBuild.distanceCannonMinMonster(this.node);
             this.setTarget(target);

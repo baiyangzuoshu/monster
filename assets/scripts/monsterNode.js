@@ -87,6 +87,9 @@ cc.Class({
         let minDis=9999;
         for(let i=0;i<this.m_monsterArr.length;i++){
            let monster=this.m_monsterArr[i];
+           let js=monster.getComponent("monsterItem")
+           if(js&&js.isDie())continue
+           
            let dis=Math.abs(window.getDistance(cc.v2(monster.x,monster.y),cc.v2(cannon.x,cannon.y)));
            if(dis<window.m_gCannonRange&&dis<minDis){
                 minDis=dis;
