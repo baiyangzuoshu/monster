@@ -5,6 +5,7 @@ window.m_gCannonBuild=null;
 window.m_gBulletBuild=null
 window.m_gCannonRange=230;
 window.m_gBulletEffect=null
+window.m_startGame=false
 
 //生成从minNum到maxNum的随机数
 window.random=function(minNum, maxNum) {

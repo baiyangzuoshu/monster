@@ -40,17 +40,20 @@ cc.Class({
     },
 
     monsterAutoBuild(){
-        let pathList=window.m_gMapDataManager.getPathData()
-        let levelDesign=window.g_GlobalData.levelDesign
-        let data=levelDesign.getLevelData(this.m_gkLevel)
-        let curData=data[this.m_monsterIndex++]
-        let type=curData.type
-        let index=curData.id
-        let hp=curData.hp
-        let speed=curData.speed
-        this.buildMonster(pathList,type,index,hp,speed);
-        if(this.m_monsterIndex>=data.length)
-            this.m_monsterIndex=0
+        if(window.m_startGame){
+            let pathList=window.m_gMapDataManager.getPathData()
+            let levelDesign=window.g_GlobalData.levelDesign
+            let data=levelDesign.getLevelData(this.m_gkLevel)
+            let curData=data[this.m_monsterIndex++]
+            let type=curData.type
+            let index=curData.id
+            let hp=curData.hp
+            let speed=curData.speed
+            this.buildMonster(pathList,type,index,hp,speed);
+            if(this.m_monsterIndex>=data.length)
+                this.m_monsterIndex=0
+        }
+        
     },
 
     build(){
@@ -89,7 +92,7 @@ cc.Class({
            let monster=this.m_monsterArr[i];
            let js=monster.getComponent("monsterItem")
            if(js&&js.isDie())continue
-           
+
            let dis=Math.abs(window.getDistance(cc.v2(monster.x,monster.y),cc.v2(cannon.x,cannon.y)));
            if(dis<window.m_gCannonRange&&dis<minDis){
                 minDis=dis;

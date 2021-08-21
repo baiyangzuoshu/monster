@@ -28,18 +28,25 @@ cc.Class({
     },
 
     hit(hp){
-        this.m_curHp-=Math.abs(hp)
-        this.updateHpProgressBar()
+        let monster=this.node
+        if(Math.abs(hp)>this.m_curHp)
+            hp=this.m_curHp
 
+        window.m_gBulletEffect.createLabel(monster.getPosition(),hp)
+        
+        this.m_curHp-=hp
+        this.updateHpProgressBar()
+        
         if(this.m_curHp<=0){
             this.m_curHp=0
             this.m_maxHp=0
-            let monster=this.node;
+            
             this.setState(-1)
             monster.stopAllActions()
             window.m_gBulletEffect.createEffect(monster.getPosition())
             window.m_gMonsterBuild.recycleMonster(monster)
         }
+        
     },
 
     init(pathList,type,index,hp,speed){
