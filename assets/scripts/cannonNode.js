@@ -28,13 +28,13 @@ cc.Class({
  * 创建炮台
  * @returns 
  */
-    getCannon(){
-        let cannon;
+    getOrCreateCannon(){
+        let cannon
         if(this.m_cannonPool.size()>0)
-            cannon=this.m_cannonPool.get();
+            cannon=this.m_cannonPool.get()
         else
-            cannon=cc.instantiate(this.m_cannonPrefab);
-        return cannon;
+            cannon=cc.instantiate(this.m_cannonPrefab)
+        return cannon
     },
     recycleCannon(cannon){
         cannon.getComponent("cannon").resetCannon();
@@ -67,7 +67,7 @@ cc.Class({
 
         let _x=this.m_cannonSp.x;
         let _y=this.m_cannonSp.y;
-        let cannon=this.getCannon();
+        let cannon=this.getOrCreateCannon();
         let js=cannon.getComponent("cannon");
         js.initCannon(0);
         cannon.x=_x;
@@ -95,7 +95,7 @@ cc.Class({
             }
         }
     },
-
+    //自动合成
     autoSynthetic(){
         let levelObj={}
         for(let i=0;i<this.m_cannonData.length;i++){
@@ -126,18 +126,16 @@ cc.Class({
             return a.level>b.level//自动合成从最小等级开始
         })
 
-        //console.log(JSON.stringify(levelObj))
-        //console.log(JSON.stringify(levelArr))
-
         for(let i=0;i<this.m_cannonData.length;i++){
             if(this.m_cannonData[i].isMakeBuilded){
                 for(let j=0;j<this.m_cannonData.length;j++){
                     if(i!=j&&this.m_cannonData[j].isMakeBuilded){
                         let selected_js=this.m_cannonData[i].cannon.getComponent("cannon");
                         let target_js=this.m_cannonData[j].cannon.getComponent("cannon");
-                        if(target_js.isSynthetic(selected_js)&&levelArr[0].level==target_js.getCurLevel()){//等级相同可以合成
+                        if(target_js.isSynthetic(selected_js)
+                        &&levelArr[0].level==target_js.getCurLevel()){//等级相同可以合成
                             target_js.levelUp()
-                            this.resetCannonDataByIndex(i);
+                            this.recycleCannonByIndex(i);
                             return
                         }
                     }
@@ -156,8 +154,8 @@ cc.Class({
     },
 
     onTouchStart(event){
-        let nodePos=this.node.convertToNodeSpaceAR(event.getLocation());
-        let index=this.getCannonIndexByNodePos(nodePos);
+        let nodeP=this.node.convertToNodeSpaceAR(event.getLocation())
+        let index=this.getCannonIndexByNodePos(nodeP);
         if(index>-1){
             if(this.m_cannonData[index].isMakeBuilded){
                 let cannon=this.m_cannonData[index].cannon;
@@ -172,10 +170,8 @@ cc.Class({
                 this.showCannonHit(cannon);
             }
         }
-        cc.log("touchstart",nodePos);
     },
     onTouchMove(event){
-        cc.log("touchmove");
         if(this.m_curCopyConnon){
             let nodePos=this.node.convertToNodeSpaceAR(event.getLocation());
             this.m_curCopyConnon.x=nodePos.x;
@@ -213,7 +209,7 @@ cc.Class({
                 let selected_js=selectedCannon.getComponent("cannon");
                 if(target_js.isSynthetic(selected_js)){//合成
                     target_js.levelUp();
-                    this.resetCannonDataByIndex(this.m_curSelectedIndex);
+                    this.recycleCannonByIndex(this.m_curSelectedIndex);
                 }
                 else{//交换位置
                     this.m_cannonData[index].cannon=selectedCannon;
@@ -237,7 +233,7 @@ cc.Class({
                 let selected_js=selectedCannon.getComponent("cannon"); 
                 selected_js.depthCopyData(target_js);
 
-                this.resetCannonDataByIndex(this.m_curSelectedIndex);
+                this.recycleCannonByIndex(this.m_curSelectedIndex);
             }
         }
         
@@ -252,7 +248,6 @@ cc.Class({
         }
         this.m_curCopyConnon=null;
         this.m_curSelectedIndex=-1;
-        cc.log("touchcancel");
     },
 /**
  * 
@@ -260,8 +255,10 @@ cc.Class({
  */
     getCannonIndexByNodePos(nodePos){
         for(let i=0;i<this.m_cannonData.length;i++){
+            //锚点0,1,
             let _x=this.m_cannonData[i].x*106+106/2;
             let _y=-this.m_cannonData[i].y*106-106/2;
+            //位置为中间位置
             if(nodePos.x>=_x-106/2&&nodePos.x<=_x+106/2
                 &&nodePos.y>=_y-106/2&&nodePos.y<=_y+106/2){
                     return i;
@@ -279,18 +276,20 @@ cc.Class({
         }
     },
 
-    resetCannonDataByIndex(index){
-        let data=this.m_cannonData[index];
-        data.isMakeBuilded=false;
-        this.recycleCannon(data.cannon);
-        data.cannon=null;
+    recycleCannonByIndex(index){
+        let data=this.m_cannonData[index]
+        data.isMakeBuilded=false
+        this.recycleCannon(data.cannon)
+        data.cannon=null
     },
 
     showCannonHit(cannon){
         for(let i=0;i<this.m_cannonData.length;i++){
             if(this.m_cannonData[i].isMakeBuilded){
-                if(cannon.getComponent("cannon").isSynthetic(this.m_cannonData[i].cannon.getComponent("cannon"))){//合成
-                    this.m_cannonData[i].cannon.getComponent("cannon").showHit();
+                let cur_js=cannon.getComponent("cannon")
+                let next_js=this.m_cannonData[i].cannon.getComponent("cannon")
+                if(cur_js.isSynthetic(next_js)){//合成
+                    next_js.showHit();
                 }
             }
         }
