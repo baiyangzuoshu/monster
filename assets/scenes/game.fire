@@ -4776,6 +4776,12 @@
     "m_monsterItem": {
       "__uuid__": "c0560d95-f290-43b0-b9f7-7a7a357c4be8"
     },
+    "m_coinPrefab": {
+      "__uuid__": "6124568f-a8c3-43c8-ba40-a89ab1fc7425"
+    },
+    "m_coin": {
+      "__id__": 83
+    },
     "_id": "7c6I62flhIhbmSEBfrSGLJ"
   },
   {
@@ -7309,6 +7315,12 @@
     "_enabled": true,
     "m_lab": {
       "__uuid__": "19667cb1-7ead-4bec-a686-1ac2f2876a57"
+    },
+    "m_coin": {
+      "__id__": 72
+    },
+    "m_coinFlyPrefab": {
+      "__uuid__": "6124568f-a8c3-43c8-ba40-a89ab1fc7425"
     },
     "_id": "fbwl4RJnxIepm3/Tr+u2uI"
   },

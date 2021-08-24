@@ -9,7 +9,9 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-       m_lab:cc.Prefab
+       m_lab:cc.Prefab,
+       m_coin:cc.Node,
+       m_coinFlyPrefab:cc.Prefab
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -43,10 +45,29 @@ cc.Class({
 
     addCoin(){
         window.g_LocalData.addCoin(1000)
+        this.createCoinFly()
     },
 
     startGame(){
         window.m_startGame=true
+    },
+
+    createCoinFly(){
+        let coinFly=cc.instantiate(this.m_coinFlyPrefab)
+        let pos=this.m_coin.convertToWorldSpaceAR(cc.v2(0,0))
+        let nodePos=this.node.convertToNodeSpaceAR(pos)
+        coinFly.parent=this.node
+
+        let posArr=[]
+        posArr.push(cc.v2(coinFly.x,coinFly.y))
+        posArr.push(cc.v2(coinFly.x+100,coinFly.y-150))
+        posArr.push(nodePos)
+
+        let action=cc.bezierTo(0.5,posArr)
+        let action2=cc.callFunc(()=>{
+            coinFly.removeFromParent()
+        })
+        cc.tween(coinFly).then(action).then(action2).start()
     },
 
     // onLoad () {},

@@ -9,7 +9,9 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        m_monsterItem:cc.Prefab
+        m_monsterItem:cc.Prefab,
+        m_coinPrefab:cc.Prefab,
+        m_coin:cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -20,8 +22,41 @@ cc.Class({
         window.m_gMonsterBuild=this;
         this.m_monsterArr=[];
         this.m_monsterPool=new cc.NodePool();
+        this.m_coinPool=new cc.NodePool()
         this.schedule(this.updateMonsterZIndex,1.0);
         this.schedule(this.monsterAutoBuild,1.0)
+    },
+
+    playCoinFlyAction(pos){
+        let worldPos=this.m_coin.convertToWorldSpaceAR(cc.v2(0,0))
+        let nodePos=this.node.convertToNodeSpaceAR(worldPos)
+        let dis=window.getDistance(nodePos,pos)
+        let coinFly=this.createCoinFly()
+        coinFly.x=pos.x
+        coinFly.y=pos.y
+        coinFly.parent=this.node
+
+        let posArr=[]
+        posArr.push(cc.v2(pos.x,pos.y))
+        posArr.push(cc.v2(pos.x+100,pos.y-dis/2))
+        posArr.push(nodePos)
+
+        let action=cc.bezierTo(0.5,posArr)
+        let action2=cc.callFunc(()=>{
+            this.recycleCoinFly(coinFly)
+        })
+        cc.tween(coinFly).then(action).then(action2).start()
+    },
+    createCoinFly(){
+        let coinFly
+        if(this.m_coinPool.size()>0)
+            coinFly=this.m_coinPool.get()
+        else
+            coinFly=cc.instantiate(this.m_coinPrefab)
+        return coinFly
+    },
+    recycleCoinFly(coin){
+        this.m_coinPool.put(coin)
     },
 
     createMonster(){

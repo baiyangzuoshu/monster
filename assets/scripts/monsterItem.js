@@ -38,13 +38,15 @@ cc.Class({
         this.updateHpProgressBar()
         
         if(this.m_curHp<=0){
-            this.m_curHp=0
-            this.m_maxHp=0
-            
             this.setState(-1)
             monster.stopAllActions()
+            window.g_LocalData.addCoin(this.m_maxHp*100)
             window.m_gBulletEffect.createEffect(monster.getPosition())
+            window.m_gMonsterBuild.playCoinFlyAction(monster.getPosition())
             window.m_gMonsterBuild.recycleMonster(monster)
+
+            this.m_curHp=0
+            this.m_maxHp=0
         }
         
     },
