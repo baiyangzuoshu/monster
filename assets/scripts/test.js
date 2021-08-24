@@ -37,6 +37,14 @@ cc.Class({
         cc.tween(labNode).then(action1).then(action2).start()
     },
 
+    addGold(){
+        window.g_LocalData.addGold(100)
+    },
+
+    addCoin(){
+        window.g_LocalData.addCoin(1000)
+    },
+
     startGame(){
         window.m_startGame=true
     },

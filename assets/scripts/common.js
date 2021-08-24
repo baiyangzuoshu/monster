@@ -6,6 +6,7 @@ window.m_gBulletBuild=null
 window.m_gCannonRange=230;
 window.m_gBulletEffect=null
 window.m_startGame=false
+window.g_GameUI=null
 
 //生成从minNum到maxNum的随机数
 window.random=function(minNum, maxNum) {
@@ -131,5 +132,62 @@ function buildMonsterData(obj){
 }
 
 window.g_GlobalData = createGlobalData();
-buildMonsterData(g_GlobalData);
+buildMonsterData(window.g_GlobalData);
+///////////////////////////////////////////////////数据本地存储
+window.g_LocalData={}
+window.g_LocalData.m_data={}
+window.g_LocalData.m_data.m_gold=0
+window.g_LocalData.m_data.m_coin=0
+window.g_LocalData.saveData=function(){
+  let jsonData=JSON.stringify(window.g_LocalData.m_data)
+  cc.sys.localStorage.setItem("LocalData",jsonData)
+} 
+window.g_LocalData.delData=function(){
+  cc.sys.localStorage.removeItem("LocalData")
+  cc.sys.localStorage.clear()
+  window.g_LocalData.saveData()
+}
+window.g_LocalData.getData=function(){
+  let jsonData=cc.sys.localStorage.getItem("LocalData")
+  console.log("jsonData",jsonData)
+  if(!jsonData){
+    window.g_LocalData.m_data={}
+    window.g_LocalData.m_data.m_gold=0
+    window.g_LocalData.m_data.m_coin=0
+    return
+  }
+  window.g_LocalData.m_data=JSON.parse(jsonData)
+}
+
+window.g_LocalData.getGold=function(){
+  window.g_LocalData.getData()
+
+  return  window.g_LocalData.m_data.m_gold
+}
+window.g_LocalData.addGold=function(_gold){
+  window.g_LocalData.getData()
+
+  window.g_LocalData.m_data.m_gold+=_gold
+  if(0>window.g_LocalData.m_data.m_gold)
+    window.g_LocalData.m_data.m_gold=0
+  window.g_LocalData.saveData()
+
+  window.g_GameUI.updateGold()
+}
+
+window.g_LocalData.getCoin=function(){
+  window.g_LocalData.getData()
+
+  return  window.g_LocalData.m_data.m_coin
+}
+window.g_LocalData.addCoin=function(_coin){
+  window.g_LocalData.getData()
+
+  window.g_LocalData.m_data.m_coin+=_coin
+  if(0>window.g_LocalData.m_data.m_coin)
+    window.g_LocalData.m_data.m_coin=0
+  window.g_LocalData.saveData()
+
+  window.g_GameUI.updateCoin()
+}
   
