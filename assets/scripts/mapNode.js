@@ -9,13 +9,15 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        m_blockAtlas:cc.SpriteAtlas
+        m_blockAtlas:cc.SpriteAtlas,
+        m_crownPrefab:cc.Prefab
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         this.initMap();
+        this.createCrown()
     },
 
     initMap(){
@@ -32,6 +34,14 @@ cc.Class({
                 sp.spriteFrame=spriteFrame;
             }
         }
+    },
+
+    createCrown(){
+        let crown=cc.instantiate(this.m_crownPrefab)
+        let pathList=window.m_gMapDataManager.getPathData()
+        crown.parent=this.node
+        crown.x=pathList[pathList.length-1].x*106+106/2
+        crown.y=-pathList[pathList.length-1].y*106-106/2
     },
 
     start () {

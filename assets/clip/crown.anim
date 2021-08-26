@@ -1,0 +1,183 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "crown",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "paths": {
+      "map_zhongdian_2": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.3,
+              "value": 125
+            },
+            {
+              "frame": 0.6,
+              "value": 200
+            },
+            {
+              "frame": 1,
+              "value": 255
+            }
+          ],
+          "y": [
+            {
+              "frame": 0,
+              "value": 85
+            },
+            {
+              "frame": 0.1,
+              "value": 84
+            },
+            {
+              "frame": 0.2,
+              "value": 83
+            },
+            {
+              "frame": 0.3,
+              "value": 82
+            },
+            {
+              "frame": 0.4,
+              "value": 81
+            },
+            {
+              "frame": 0.5,
+              "value": 80
+            },
+            {
+              "frame": 0.6,
+              "value": 79
+            },
+            {
+              "frame": 0.7,
+              "value": 78
+            },
+            {
+              "frame": 0.8,
+              "value": 77
+            },
+            {
+              "frame": 0.9,
+              "value": 76
+            },
+            {
+              "frame": 1,
+              "value": 75
+            }
+          ]
+        }
+      },
+      "map_zhongdian_1": {
+        "props": {
+          "y": [
+            {
+              "frame": 0,
+              "value": 85
+            },
+            {
+              "frame": 0.1,
+              "value": 84
+            },
+            {
+              "frame": 0.2,
+              "value": 83
+            },
+            {
+              "frame": 0.3,
+              "value": 82
+            },
+            {
+              "frame": 0.4,
+              "value": 81
+            },
+            {
+              "frame": 0.5,
+              "value": 80
+            },
+            {
+              "frame": 0.6,
+              "value": 79
+            },
+            {
+              "frame": 0.7,
+              "value": 78
+            },
+            {
+              "frame": 0.8,
+              "value": 77
+            },
+            {
+              "frame": 0.9,
+              "value": 76
+            },
+            {
+              "frame": 1,
+              "value": 75
+            }
+          ]
+        }
+      },
+      "map_zhongdian_3": {
+        "props": {
+          "y": [
+            {
+              "frame": 0,
+              "value": -5
+            },
+            {
+              "frame": 0.1,
+              "value": -4
+            },
+            {
+              "frame": 0.2,
+              "value": -3
+            },
+            {
+              "frame": 0.3,
+              "value": -2
+            },
+            {
+              "frame": 0.4,
+              "value": -1
+            },
+            {
+              "frame": 0.5,
+              "value": 0
+            },
+            {
+              "frame": 0.6,
+              "value": 1
+            },
+            {
+              "frame": 0.7,
+              "value": 2
+            },
+            {
+              "frame": 0.8,
+              "value": 3
+            },
+            {
+              "frame": 0.9,
+              "value": 4
+            },
+            {
+              "frame": 1,
+              "value": 5
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}

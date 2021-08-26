@@ -22,9 +22,6 @@ cc.Class({
         this.json=this.m_mapData.json;
         this._blockData=this.json._mapBlockData;//写入
         this._pathData=this.json._pathList;
-        cc.log(this.m_mapData);
-        cc.log(this._mapBlockData);
-        cc.log(this._pathList);
     },
 
     getBlockData(){

@@ -4701,6 +4701,9 @@
     "m_blockAtlas": {
       "__uuid__": "b89ba576-68e6-47e0-9216-64c1d61fcf18"
     },
+    "m_crownPrefab": {
+      "__uuid__": "35eb94be-7145-409e-949f-81f5005863f2"
+    },
     "_id": "9eNP5GAZ1JCboDisZhCjCf"
   },
   {
