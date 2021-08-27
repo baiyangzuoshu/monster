@@ -105,7 +105,25 @@ cc.Class({
         }
         moveTo=moveTo.call(()=>{
             this.setState(-1);
-            window.m_gMonsterBuild.recycleMonster(monster);
+            if(window.m_gGame.isPlaying()){
+                window.m_gGame.setGameState(window.GAME_OVER)
+                let crown=window.m_gMapBuild.getCrown()
+                crown.parent=this.node
+                crown.x=0
+                crown.y=0
+                let animation=crown.getComponent(cc.Animation)
+                animation.stop()
+                crown.getChildByName("map_zhongdian_2").active=false
+                crown.getChildByName("map_zhongdian_3").active=false
+            }
+            let x0=pathList[0].x*106+106/2;
+            let y0= -pathList[0].y * 106-106/2 ;
+
+            let seq=cc.sequence(cc.scaleTo(1.0,0.5,1.5),cc.scaleTo(0.1,0.5,0.5),cc.callFunc(()=>{
+
+            }))
+            let spawn=cc.spawn(cc.jumpTo(1.0,cc.v2(x0,y0),100,1),seq)
+            cc.tween(this.node).then(spawn).start()
         });
 
         cc.tween(monster).then(moveTo1).then(moveTo2).then(moveTo).start();

@@ -18,6 +18,8 @@ cc.Class({
     onLoad () {
         this.initMap();
         this.createCrown()
+
+        window.m_gMapBuild=this
     },
 
     initMap(){
@@ -42,6 +44,12 @@ cc.Class({
         crown.parent=this.node
         crown.x=pathList[pathList.length-1].x*106+106/2
         crown.y=-pathList[pathList.length-1].y*106-106/2
+
+        self.m_crown=crown
+    },
+
+    getCrown(){
+        return  self.m_crown
     },
 
     start () {

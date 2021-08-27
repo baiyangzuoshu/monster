@@ -49,7 +49,7 @@ cc.Class({
     },
 
     startGame(){
-        window.m_startGame=true
+        window.m_gGame.setGameState(window.GAME_START)
     },
 
     createCoinFly(){

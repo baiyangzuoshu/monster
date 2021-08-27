@@ -75,7 +75,7 @@ cc.Class({
     },
 
     monsterAutoBuild(){
-        if(window.m_startGame){
+        if(window.m_gGame.isPlaying()){
             let pathList=window.m_gMapDataManager.getPathData()
             let levelDesign=window.g_GlobalData.levelDesign
             let data=levelDesign.getLevelData(this.m_gkLevel)
