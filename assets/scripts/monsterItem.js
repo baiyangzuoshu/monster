@@ -95,41 +95,54 @@ cc.Class({
         }).to(time, { scale: 1.2,position: cc.v2(_x, _y) });
         let moveTo2 = cc.tween().to(time, { scale: 1.0,position: cc.v2(_x+106/2, _y- 106 / 2) })
 
-        let moveTo=cc.tween()
-        for(let i=2;i<pathList.length;i++){
-            let _x=pathList[i].x*106+106/2;
-            let _y=-pathList[i].y*106-106/2;
-            moveTo=moveTo.call(()=>{
-                this.monsterDirection(pathList[this.m_curPathIndex],pathList[++this.m_curPathIndex]);
-            }).to(1,{position:cc.v2(_x,_y)});
-        }
-        moveTo=moveTo.call(()=>{
-            this.setState(-1);
-            if(window.m_gGame.isPlaying()){
-                window.m_gGame.setGameState(window.GAME_OVER)
-                let crown=window.m_gMapBuild.getCrown()
-                crown.parent=this.node
-                crown.x=0
-                crown.y=0
-                let animation=crown.getComponent(cc.Animation)
-                animation.stop()
-                crown.getChildByName("map_zhongdian_2").active=false
-                crown.getChildByName("map_zhongdian_3").active=false
-            }
-            let x0=pathList[0].x*106+106/2;
-            let y0= -pathList[0].y * 106-106/2 ;
-
-            let seq=cc.sequence(cc.scaleTo(1.0,0.5,1.5),cc.scaleTo(0.1,0.5,0.5),cc.callFunc(()=>{
-
-            }))
-            let spawn=cc.spawn(cc.jumpTo(1.0,cc.v2(x0,y0),100,1),seq)
-            cc.tween(this.node).then(spawn).start()
-        });
-
-        cc.tween(monster).then(moveTo1).then(moveTo2).then(moveTo).start();
+        cc.tween(monster).then(moveTo1).then(moveTo2).then(cc.callFunc(()=>{
+            ++this.m_curPathIndex
+            this.nextMoveAction(pathList)
+        })).start();
 
         let jumpTo=cc.tween().repeatForever(cc.tween().to(time,{scale:1.2}).to(time,{scale:1.0}));
         cc.tween(this.m_monsterNode).then(jumpTo).start();
+    },
+
+    nextMoveAction(pathList){
+        let _x=   pathList[this.m_curPathIndex].x * 106+106/2;
+        let _y = -pathList[this.m_curPathIndex].y * 106-106/2;
+        let monster=this.node;
+        let dis=window.getDistance(monster.getPosition(),cc.v2(_x,_y))
+        let time=dis*0.02-window.m_gMonsterSpeed*0.1
+        let seq=cc.sequence(cc.moveTo(time,cc.v2(_x,_y)),cc.callFunc(()=>{
+            if(this.m_curPathIndex>=pathList.length-1){
+                this.moveActionEnd(pathList)
+            }else{
+                this.monsterDirection(pathList[this.m_curPathIndex],pathList[++this.m_curPathIndex])
+                this.nextMoveAction(pathList)
+            }
+        }))
+        cc.tween(monster).then(seq).start();
+    },
+
+    moveActionEnd(pathList){
+        this.setState(-1);
+        if(window.m_gGame.isPlaying()){
+            window.m_gMonsterSpeed=17
+            window.m_gGame.setGameState(window.GAME_OVER)
+            let crown=window.m_gMapBuild.getCrown()
+            crown.parent=this.node
+            crown.x=0
+            crown.y=0
+            let animation=crown.getComponent(cc.Animation)
+            animation.stop()
+            crown.getChildByName("map_zhongdian_2").active=false
+            crown.getChildByName("map_zhongdian_3").active=false
+        }
+        let x0=pathList[0].x*106+106/2;
+        let y0= -pathList[0].y * 106-106/2 ;
+
+        let seq=cc.sequence(cc.scaleTo(1.0,0.5,1.5),cc.scaleTo(0.1,0.5,0.5),cc.callFunc(()=>{
+
+        }))
+        let spawn=cc.spawn(cc.jumpTo(1.0,cc.v2(x0,y0),100,1),seq)
+        cc.tween(this.node).then(spawn).start()
     },
 
     monsterDirection(start,end){
