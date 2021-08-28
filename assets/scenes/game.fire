@@ -7579,6 +7579,9 @@
       "__id__": 2
     },
     "_enabled": true,
+    "m_resultPrefab": {
+      "__uuid__": "77bdb785-e405-45c9-83d9-e2f57e0305ae"
+    },
     "_id": "c1rHJwOV5MsLRd6Igv8gY2"
   }
 ]
