@@ -146,6 +146,8 @@ cc.Class({
     },
 
     update(dt){
+        if(!window.m_gGame.isPlaying())
+            return
         if(this.isBuildingState())
             return//正在建造中
             

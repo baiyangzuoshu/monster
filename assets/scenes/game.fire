@@ -198,7 +198,7 @@
       "array": [
         0,
         0,
-        340.52400033337744,
+        340.48331917709737,
         0,
         0,
         0,
@@ -386,8 +386,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 640,
+      "height": 1386
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -4607,6 +4607,12 @@
     "m_coinLab": {
       "__id__": 90
     },
+    "m_coinPrefab": {
+      "__uuid__": "6124568f-a8c3-43c8-ba40-a89ab1fc7425"
+    },
+    "m_coin": {
+      "__id__": 82
+    },
     "m_goldLab": {
       "__id__": 79
     },
@@ -4778,12 +4784,6 @@
     "_enabled": true,
     "m_monsterItem": {
       "__uuid__": "c0560d95-f290-43b0-b9f7-7a7a357c4be8"
-    },
-    "m_coinPrefab": {
-      "__uuid__": "6124568f-a8c3-43c8-ba40-a89ab1fc7425"
-    },
-    "m_coin": {
-      "__id__": 83
     },
     "_id": "7c6I62flhIhbmSEBfrSGLJ"
   },

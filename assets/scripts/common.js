@@ -8,6 +8,7 @@ window.m_gBulletEffect=null
 window.g_GameUI=null
 window.m_gMapBuild=null
 window.m_gMonsterSpeed=10
+window.m_gGame=null
 
 window.GAME_INIT=0
 window.GAME_START=1
