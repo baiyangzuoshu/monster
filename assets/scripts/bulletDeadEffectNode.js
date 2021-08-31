@@ -30,7 +30,7 @@ cc.Class({
         animation.play("bulletDead")
         animation.end=function(){
             animation.stop("bulletDead")
-            effect.removeFromParent()
+            effect.destroy()
         }.bind(this)
     },
     createLabel(pos,hp){
@@ -44,7 +44,7 @@ cc.Class({
         array.push(cc.v2(pos.x+-25,pos.y+50))
         array.push(cc.v2(pos.x+-50,pos.y+0))
         var action1 = cc.cardinalSplineBy(0.3, array, 0)
-        let action2=cc.callFunc(()=>{labNode.removeFromParent()})
+        let action2=cc.callFunc(()=>{labNode.destroy()})
         cc.tween(labNode).then(action1).then(action2).start()
     }
 });

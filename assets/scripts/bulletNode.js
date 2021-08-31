@@ -18,6 +18,12 @@ cc.Class({
         window.m_gBulletBuild=this
     },
 
+    clearAllBullet(){
+        for(let i=0;i<this.node.childrenCount;i++){
+            this.node.children[i].destroy()
+        }
+    },
+
     update (dt) {
     
     },

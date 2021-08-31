@@ -34,7 +34,7 @@ cc.Class({
     },
     onTouchEnd(){
         if(this.m_isRemoveSelf)
-            this.node.removeFromParent()
+            this.node.destroy()
     },
     onTouchCancel(){
         this.m_isRemoveSelf=false

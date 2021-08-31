@@ -42,10 +42,8 @@ cc.Class({
                 cc.tween(bullet)//帧事件回调有问题，改为缓动动画
                     .delay(0.5)
                     .call(()=>{
-                        this.isDie=true
-                        this.hit(this.getAtk(),this.node.m_target)
-                        this.m_effect.removeFromParent()
-                        bullet.removeFromParent()
+                        this.removeSelf()
+                        this.m_effect.destroy()
                     })
                     .start()
                 break

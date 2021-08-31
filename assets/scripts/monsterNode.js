@@ -17,6 +17,7 @@ cc.Class({
     onLoad () {
         this.m_gkLevel=1
         this.m_monsterIndex=0
+        this.m_monsterDieCount=0
         window.m_gMonsterBuild=this;
         this.m_monsterArr=[];
         this.m_monsterPool=new cc.NodePool();
@@ -34,10 +35,10 @@ cc.Class({
         return monster;
     },
     recycleMonster(monster){
+        this.m_monsterDieCount++
         let index=this.m_monsterArr.indexOf(monster);
-        this.m_monsterArr.splice(index,1);
-        monster.opacity=0
-        //this.m_monsterPool.put(monster);
+        this.m_monsterArr.splice(index,1)
+        this.m_monsterPool.put(monster)
     },
 
     monsterAutoBuild(){
@@ -45,16 +46,22 @@ cc.Class({
             let pathList=window.m_gMapDataManager.getPathData()
             let levelDesign=window.g_GlobalData.levelDesign
             let data=levelDesign.getLevelData(this.m_gkLevel)
-            let curData=data[this.m_monsterIndex++]
-            let type=curData.type
-            let index=curData.id
-            let hp=curData.hp
-            let speed=curData.speed
-            this.buildMonster(pathList,type,index,hp,speed);
-            if(this.m_monsterIndex>=data.length)
-                this.m_monsterIndex=0
+            if(this.m_monsterIndex<data.length)
+            {
+                let curData=data[this.m_monsterIndex++]
+                let type=curData.type
+                let index=curData.id
+                let hp=curData.hp
+                let speed=curData.speed
+                this.buildMonster(pathList,type,index,hp,speed)
+            }
+            else if(this.m_monsterDieCount>this.m_monsterIndex)
+            {
+                window.m_gGame.setGameState(window.GAME_OVER)
+                window.m_gGame.showGameResult(1)
+                window.m_gBulletBuild.clearAllBullet()
+            }
         }
-        
     },
 
     build(){

@@ -25,9 +25,7 @@ cc.Class({
         cc.tween(bullet)
             .delay(0.5)
             .call(()=>{
-                this.isDie=true
-                this.hit(this.getAtk(),this.node.m_target)
-                bullet.removeFromParent()
+                this.removeSelf()
             })
             .start()
     },

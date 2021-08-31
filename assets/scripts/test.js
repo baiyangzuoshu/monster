@@ -35,7 +35,7 @@ cc.Class({
         array.push(cc.v2(-25,50))
         array.push(cc.v2(-50,0))
         var action1 = cc.cardinalSplineBy(0.5, array, 0)
-        let action2=cc.callFunc(()=>{labNode.removeFromParent()})
+        let action2=cc.callFunc(()=>{labNode.destroy()})
         cc.tween(labNode).then(action1).then(action2).start()
     },
 
@@ -66,7 +66,7 @@ cc.Class({
 
         let action=cc.bezierTo(0.5,posArr)
         let action2=cc.callFunc(()=>{
-            coinFly.removeFromParent()
+            coinFly.destroy()
         })
         cc.tween(coinFly).then(action).then(action2).start()
     },

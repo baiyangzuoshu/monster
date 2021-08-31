@@ -156,7 +156,6 @@ window.g_LocalData.delData=function(){
 }
 window.g_LocalData.getData=function(){
   let jsonData=cc.sys.localStorage.getItem("LocalData")
-  console.log("jsonData",jsonData)
   if(!jsonData){
     window.g_LocalData.m_data={}
     window.g_LocalData.m_data.m_gold=0

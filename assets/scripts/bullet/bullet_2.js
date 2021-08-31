@@ -35,10 +35,9 @@ cc.Class({
         animation.play("effect")
         animation.over=function(){
             animation.stop("effect")
-            this.isDie=true
-            this.hit(this.getAtk(),this.node.m_target)
-            this.effect.removeFromParent()
-            this.node.removeFromParent()
+            this.effect.destroy()
+
+           this.removeSelf()
         }.bind(this)
     },
 

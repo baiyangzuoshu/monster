@@ -19,5 +19,10 @@ cc.Class({
     },
     getAtk(){
         return this.m_atk
+    },
+    removeSelf(){
+        this.isDie=true
+        this.hit(this.getAtk(),this.node.m_target)
+        this.node.destroy()
     }
 });

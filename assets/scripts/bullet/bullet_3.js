@@ -42,9 +42,7 @@ cc.Class({
             .delay(0.5)
             .call(()=>{
                 animation.stop("effect")
-                this.isDie=true
-                this.hit(this.getAtk(),this.node.m_target)
-                bullet.removeFromParent()
+                this.removeSelf()
             })
             .start()
     },
