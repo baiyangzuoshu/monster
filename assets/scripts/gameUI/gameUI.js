@@ -1,10 +1,3 @@
-// Learn cc.Class:
-//  - https://docs.cocos.com/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
@@ -12,7 +5,8 @@ cc.Class({
         m_coinLab:cc.Label,
         m_coinPrefab:cc.Prefab,
         m_coin:cc.Node,
-        m_goldLab:cc.Label
+        m_goldLab:cc.Label,
+        m_chapterLab:cc.Label
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -22,7 +16,14 @@ cc.Class({
         //window.g_LocalData.delData()
         this.updateGold()
         this.updateCoin()
+        this.updateChapterInfo()
         this.m_coinPool=new cc.NodePool()
+    },
+
+    updateChapterInfo(){
+        let levelDesign=window.g_GlobalData.levelDesign
+        let data=levelDesign.getLevelData(window.m_gkLevel)
+        this.m_chapterLab.string="关卡 "+data.chapter+"-"+data.level
     },
 
     playCoinFlyAction(monsterWorldPos){
@@ -66,11 +67,6 @@ cc.Class({
     updateGold(){
         let curGold=window.g_LocalData.getGold()
         this.m_goldLab.string=curGold+""
-    },
+    }
 
-    start () {
-
-    },
-
-    // update (dt) {},
 });

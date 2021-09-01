@@ -25,27 +25,45 @@ cc.Class({
         manager.enabledDebugDraw = true;
 
         window.m_gGame=this
-        this.m_gameState=window.GAME_INIT
+        this._state=window.GAME_INIT
+    },
+
+    startGame(){
+        window.m_gMonsterSpeed=10
+        this.setGameState(window.GAME_START)
+        window.g_GameUI.updateChapterInfo()
+    },
+
+    nextChapter(){
+        this.setGameState(window.GAME_OVER)
+        this.showGameResult(1)
+        window.m_gBulletBuild.clearAllBullet()
+        window.m_gMonsterBuild.clearAllMonster()
+        window.m_gCannonBuild.clearAllCannonTarget()
+        window.m_gkLevel++
+        window.g_GameUI.updateChapterInfo()
     },
 
     showGameResult(result){//1胜利 -1失败
+        let levelDesign=window.g_GlobalData.levelDesign
+        let data=levelDesign.getLevelData(window.m_gkLevel)
         let resultNode=cc.instantiate(this.m_resultPrefab)
         resultNode.parent=this.node
         let js=resultNode.getComponent("result")
         if(-1==result){
-            js.setLose(1000)
+            js.setLose(data.fail)
         }
         else if(1==result){
-            js.setWin(1000)
+            js.setWin(data.success)
         }
     },
 
     isPlaying(){
-        return  this._state==window.GAME_START
+        return  this.m_gameState==window.GAME_START
     },
 
     getGameState(){
-        return  m_gameState
+        return  this.m_gameState
     },
 
     setGameState(_state){
@@ -56,6 +74,4 @@ cc.Class({
 
         this._state=_state
     }
-
-    // update (dt) {},
 });

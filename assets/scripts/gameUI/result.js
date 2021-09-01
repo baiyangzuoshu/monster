@@ -34,7 +34,10 @@ cc.Class({
     },
     onTouchEnd(){
         if(this.m_isRemoveSelf)
+        {
             this.node.destroy()
+            window.m_gGame.startGame()
+        }
     },
     onTouchCancel(){
         this.m_isRemoveSelf=false

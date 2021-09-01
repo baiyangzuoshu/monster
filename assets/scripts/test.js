@@ -49,8 +49,7 @@ cc.Class({
     },
 
     startGame(){
-        window.m_gMonsterSpeed=10
-        window.m_gGame.setGameState(window.GAME_START)
+        window.m_gGame.startGame()
     },
 
     createCoinFly(){

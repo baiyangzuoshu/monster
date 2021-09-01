@@ -9,6 +9,7 @@ window.g_GameUI=null
 window.m_gMapBuild=null
 window.m_gMonsterSpeed=10
 window.m_gGame=null
+window.m_gkLevel=1
 
 window.GAME_INIT=0
 window.GAME_START=1
@@ -109,26 +110,84 @@ function createGlobalData(){
 function buildMonsterData(obj){
   obj.levelDesign = 
   [
-      //第一关
-      [   
-          {type:0,id:0,hp:1,speed:0.8},
-          {type:0,id:1,hp:1,speed:0.8},
-          {type:0,id:1,hp:1,speed:0.8},
-          {type:0,id:1,hp:1,speed:0.8},
-          {type:0,id:1,hp:1,speed:0.8},
-          {type:1,id:0,hp:5,speed:1.2},
-          {type:0,id:2,hp:1,speed:0.8},
-          {type:0,id:3,hp:1,speed:0.8},
-          {type:0,id:4,hp:1,speed:0.8},
-          {type:1,id:1,hp:5,speed:1.2},
-          {type:0,id:6,hp:1,speed:0.8},
-          {type:0,id:6,hp:1,speed:0.8},
-          {type:0,id:7,hp:1,speed:0.8},
-          {type:0,id:8,hp:1,speed:0.8},
-          {type:0,id:8,hp:1,speed:0.8},
-          {type:0,id:8,hp:1,speed:0.8},
-      ]
-  ];
+    {
+      "chapter":1,"level":1,"success":10000,"fail":1000,"data": [   
+        {type:0,id:0,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:1,id:0,hp:5,speed:1.2},
+        {type:0,id:2,hp:1,speed:0.8},
+        {type:0,id:3,hp:1,speed:0.8},
+        {type:0,id:4,hp:1,speed:0.8},
+        {type:1,id:1,hp:5,speed:1.2},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:7,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8}]
+    },
+    {
+      "chapter":1,"level":2,"success":10000,"fail":1000,"data": [   
+        {type:0,id:0,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:1,id:0,hp:5,speed:1.2},
+        {type:0,id:2,hp:1,speed:0.8},
+        {type:0,id:3,hp:1,speed:0.8},
+        {type:0,id:4,hp:1,speed:0.8},
+        {type:1,id:1,hp:5,speed:1.2},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:7,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8}]
+    },
+    {
+      "chapter":1,"level":3,"success":10000,"fail":1000,"data": [   
+        {type:0,id:0,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:1,id:0,hp:5,speed:1.2},
+        {type:0,id:2,hp:1,speed:0.8},
+        {type:0,id:3,hp:1,speed:0.8},
+        {type:0,id:4,hp:1,speed:0.8},
+        {type:1,id:1,hp:5,speed:1.2},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:7,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8}]
+    },
+    {
+      "chapter":1,"level":4,"success":10000,"fail":1000,"data": [   
+        {type:0,id:0,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:0,id:1,hp:1,speed:0.8},
+        {type:1,id:0,hp:5,speed:1.2},
+        {type:0,id:2,hp:1,speed:0.8},
+        {type:0,id:3,hp:1,speed:0.8},
+        {type:0,id:4,hp:1,speed:0.8},
+        {type:1,id:1,hp:5,speed:1.2},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:6,hp:1,speed:0.8},
+        {type:0,id:7,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8},
+        {type:0,id:8,hp:1,speed:0.8}]
+    }
+  ]
+  
   obj.levelDesign.getLevelData = function(level){
       var len = this.levelDesign.length;
       if( level >= len ){

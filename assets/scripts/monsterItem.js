@@ -48,7 +48,6 @@ cc.Class({
             this.m_curHp=0
             this.m_maxHp=0
         }
-        
     },
 
     init(pathList,type,index,hp,speed){

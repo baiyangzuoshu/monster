@@ -15,37 +15,38 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.m_gkLevel=1
         this.m_monsterIndex=0
         this.m_monsterDieCount=0
         window.m_gMonsterBuild=this;
         this.m_monsterArr=[];
-        this.m_monsterPool=new cc.NodePool();
        
         this.schedule(this.updateMonsterZIndex,1.0);
         this.schedule(this.monsterAutoBuild,1.0)
     },
 
     createMonster(){
-        let monster;
-        if(this.m_monsterPool.size()>0)
-            monster=this.m_monsterPool.get();   
-        else
-            monster=cc.instantiate(this.m_monsterItem);
-        return monster;
+        let monster=cc.instantiate(this.m_monsterItem)
+
+        return monster
     },
     recycleMonster(monster){
         this.m_monsterDieCount++
-        let index=this.m_monsterArr.indexOf(monster);
-        this.m_monsterArr.splice(index,1)
-        this.m_monsterPool.put(monster)
+        monster.opacity=0
+    },
+    clearAllMonster(){
+        for(let i=this.m_monsterArr.length-1;i>=0;i--){
+            this.m_monsterArr[i].destroy()
+        }
+        this.m_monsterDieCount=0
+        this.m_monsterIndex=0
+        this.m_monsterArr=[];
     },
 
     monsterAutoBuild(){
         if(window.m_gGame.isPlaying()){
             let pathList=window.m_gMapDataManager.getPathData()
             let levelDesign=window.g_GlobalData.levelDesign
-            let data=levelDesign.getLevelData(this.m_gkLevel)
+            let data=levelDesign.getLevelData(window.m_gkLevel).data
             if(this.m_monsterIndex<data.length)
             {
                 let curData=data[this.m_monsterIndex++]
@@ -55,12 +56,13 @@ cc.Class({
                 let speed=curData.speed
                 this.buildMonster(pathList,type,index,hp,speed)
             }
-            else if(this.m_monsterDieCount>this.m_monsterIndex)
+            else if(this.m_monsterDieCount>=this.m_monsterIndex)
             {
-                window.m_gGame.setGameState(window.GAME_OVER)
-                window.m_gGame.showGameResult(1)
-                window.m_gBulletBuild.clearAllBullet()
+                window.m_gGame.setGameState(window.GAME_STOP)//下一帧
             }
+        }
+        else if(window.GAME_STOP==window.m_gGame.getGameState()){
+            window.m_gGame.nextChapter()
         }
     },
 

@@ -302,6 +302,14 @@ cc.Class({
         }
     },
 
+    clearAllCannonTarget(){
+        for(let i=0;i<this.m_cannonData.length;i++){
+            if(this.m_cannonData[i].isMakeBuilded){
+                this.m_cannonData[i].cannon.getComponent("cannon").setTarget(null)
+            }
+        }
+    },
+
     showCannonRange(cannon){
         this.hideCannonRange();
         cannon.getComponent("cannon").showRange();
