@@ -6,6 +6,7 @@ cc.Class({
         m_coinPrefab:cc.Prefab,
         m_coin:cc.Node,
         m_goldLab:cc.Label,
+        m_resultPrefab:cc.Prefab,
         m_chapterLab:cc.Label
     },
 
@@ -20,17 +21,31 @@ cc.Class({
         this.m_coinPool=new cc.NodePool()
     },
 
+    showGameResult(result){//1胜利 -1失败
+        let levelDesign=window.g_GlobalData.levelDesign
+        let data=levelDesign.getLevelData(window.m_gkLevel)
+        let resultNode=cc.instantiate(this.m_resultPrefab)
+        resultNode.parent=this.node
+        let js=resultNode.getComponent("result")
+        if(-1==result){
+            js.setLose(data.fail)
+        }
+        else if(1==result){
+            js.setWin(data.success)
+        }
+    },
+
     updateChapterInfo(){
         let levelDesign=window.g_GlobalData.levelDesign
         let data=levelDesign.getLevelData(window.m_gkLevel)
         this.m_chapterLab.string="关卡 "+data.chapter+"-"+data.level
     },
 
-    playCoinFlyAction(monsterWorldPos){
-        let monsterNodePos=this.node.convertToNodeSpaceAR(monsterWorldPos)
+    playCoinFlyAction(worldPos,cb){
+        let monsterNodePos=this.node.convertToNodeSpaceAR(worldPos)
 
-        let worldPos=this.m_coin.convertToWorldSpaceAR(cc.v2(0,0))
-        let nodePos=this.node.convertToNodeSpaceAR(worldPos)
+        let coinWorldPos=this.m_coin.convertToWorldSpaceAR(cc.v2(0,0))
+        let nodePos=this.node.convertToNodeSpaceAR(coinWorldPos)
         let dis=window.getDistance(nodePos,monsterNodePos)
         let coinFly=this.createCoinFly()
         coinFly.x=monsterNodePos.x
@@ -42,9 +57,10 @@ cc.Class({
         posArr.push(cc.v2(monsterNodePos.x+100,monsterNodePos.y-dis/2))
         posArr.push(nodePos)
 
-        let action=cc.bezierTo(0.5,posArr)
+        let action=cc.bezierTo(1.0,posArr)
         let action2=cc.callFunc(()=>{
             this.recycleCoinFly(coinFly)
+            cb()
         })
         cc.tween(coinFly).then(action).then(action2).start()
     },

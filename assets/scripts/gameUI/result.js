@@ -11,6 +11,7 @@ cc.Class({
     properties: {
         m_winBg:cc.Node,
         m_loseBg:cc.Node,
+        m_coin:cc.Node,
         m_coinLabel:cc.Label
     },
 
@@ -46,16 +47,16 @@ cc.Class({
     setWin(number){
         this.m_winBg.active=true
         this.m_coinLabel.string=""+number
+        window.g_GameUI.playCoinFlyAction(this.m_coin.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
+            window.g_LocalData.addCoin(number)
+        })
     },
 
     setLose(number){
         this.m_loseBg.active=true
         this.m_coinLabel.string=""+number
-    },
-
-    start () {
-
-    },
-
-    // update (dt) {},
+        window.g_GameUI.playCoinFlyAction(this.m_coin.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
+            window.g_LocalData.addCoin(number)
+        })
+    }
 });

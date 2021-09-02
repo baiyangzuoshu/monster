@@ -40,9 +40,12 @@ cc.Class({
         if(this.m_curHp<=0){
             this.setState(-1)
             monster.stopAllActions()
-            window.g_LocalData.addCoin(this.m_maxHp*100)
+            let number=this.m_maxHp*100
             window.m_gBulletEffect.createEffect(monster.getPosition())
-            window.g_GameUI.playCoinFlyAction(monster.convertToWorldSpaceAR(cc.v2(0,0)))
+            window.g_GameUI.playCoinFlyAction(monster.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
+                window.g_LocalData.addCoin(number)
+            })
+
             window.m_gMonsterBuild.recycleMonster(monster)
 
             this.m_curHp=0
