@@ -21,42 +21,27 @@ cc.Class({
         this.m_winBg.active=false
         this.m_loseBg.active=false
         this.m_coinLabel.string="0"
-        this.node.on("touchstart",this.onTouchStart,this)
-        this.node.on("touchmove",this.onTouchMove,this)
-        this.node.on("touchend",this.onTouchEnd,this)
-        this.node.on("touchcancel",this.touchcancel,this)
-    },
-
-    onTouchStart(){
-        this.m_isRemoveSelf=true
-    },
-    onTouchMove(){
-
-    },
-    onTouchEnd(){
-        if(this.m_isRemoveSelf)
-        {
-            this.node.destroy()
-            window.m_gGame.startGame()
-        }
-    },
-    onTouchCancel(){
-        this.m_isRemoveSelf=false
     },
 
     setWin(number){
         this.m_winBg.active=true
         this.m_coinLabel.string=""+number
-        window.g_GameUI.playCoinFlyAction(this.m_coin.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
-            window.g_LocalData.addCoin(number)
+        window.m_gGameUI.playCoinFlyAction(this.m_coin.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
+            this.actionCB(number)
+            window.m_gGame.startGame()
         })
     },
 
     setLose(number){
         this.m_loseBg.active=true
         this.m_coinLabel.string=""+number
-        window.g_GameUI.playCoinFlyAction(this.m_coin.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
-            window.g_LocalData.addCoin(number)
+        window.m_gGameUI.playCoinFlyAction(this.m_coin.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
+            this.actionCB(number)
         })
+    },
+
+    actionCB(number){
+        window.g_LocalData.addCoin(number)
+        this.node.destroy()
     }
 });

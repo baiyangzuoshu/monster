@@ -1,0 +1,113 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "bossView",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.8,
+  "sample": 5,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "left": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -670,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.2,
+              "value": [
+                -370,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.4,
+              "value": [
+                -200,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.6,
+              "value": [
+                -100,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.8,
+              "value": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      },
+      "right": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                700,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.2,
+              "value": [
+                370,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.4,
+              "value": [
+                200,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.6,
+              "value": [
+                100,
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.8,
+              "value": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0.8,
+      "func": "over",
+      "params": []
+    }
+  ]
+}

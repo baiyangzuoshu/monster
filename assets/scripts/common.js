@@ -5,7 +5,7 @@ window.m_gCannonBuild=null;
 window.m_gBulletBuild=null
 window.m_gCannonRange=230;
 window.m_gBulletEffect=null
-window.g_GameUI=null
+window.m_gGameUI=null
 window.m_gMapBuild=null
 window.m_gMonsterSpeed=10
 window.m_gGame=null
@@ -111,7 +111,7 @@ function buildMonsterData(obj){
   obj.levelDesign = 
   [
     {
-      "chapter":1,"level":1,"success":10000,"fail":1000,"data": [   
+      "chapter":1,"level":1,"success":10000,"fail":1000,"type":0,"data": [   
         {type:0,id:0,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
@@ -130,7 +130,7 @@ function buildMonsterData(obj){
         {type:0,id:8,hp:1,speed:0.8}]
     },
     {
-      "chapter":1,"level":2,"success":10000,"fail":1000,"data": [   
+      "chapter":1,"level":2,"success":10000,"fail":1000,"type":1,"data": [   
         {type:0,id:0,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
@@ -149,7 +149,7 @@ function buildMonsterData(obj){
         {type:0,id:8,hp:1,speed:0.8}]
     },
     {
-      "chapter":1,"level":3,"success":10000,"fail":1000,"data": [   
+      "chapter":1,"level":3,"success":10000,"fail":1000,"type":0,"data": [   
         {type:0,id:0,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
@@ -168,7 +168,7 @@ function buildMonsterData(obj){
         {type:0,id:8,hp:1,speed:0.8}]
     },
     {
-      "chapter":1,"level":4,"success":10000,"fail":1000,"data": [   
+      "chapter":1,"level":4,"success":10000,"fail":1000,"type":1,"data": [   
         {type:0,id:0,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
         {type:0,id:1,hp:1,speed:0.8},
@@ -237,7 +237,7 @@ window.g_LocalData.addGold=function(_gold){
     window.g_LocalData.m_data.m_gold=0
   window.g_LocalData.saveData()
 
-  window.g_GameUI.updateGold()
+  window.m_gGameUI.updateGold()
 }
 
 window.g_LocalData.getCoin=function(){
@@ -253,6 +253,6 @@ window.g_LocalData.addCoin=function(_coin){
     window.g_LocalData.m_data.m_coin=0
   window.g_LocalData.saveData()
 
-  window.g_GameUI.updateCoin()
+  window.m_gGameUI.updateCoin()
 }
   

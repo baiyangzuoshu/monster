@@ -42,7 +42,7 @@ cc.Class({
             monster.stopAllActions()
             let number=this.m_maxHp*100
             window.m_gBulletEffect.createEffect(monster.getPosition())
-            window.g_GameUI.playCoinFlyAction(monster.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
+            window.m_gGameUI.playCoinFlyAction(monster.convertToWorldSpaceAR(cc.v2(0,0)),()=>{
                 window.g_LocalData.addCoin(number)
             })
 
@@ -136,8 +136,7 @@ cc.Class({
             animation.stop()
             crown.getChildByName("map_zhongdian_2").active=false
             crown.getChildByName("map_zhongdian_3").active=false
-
-            window.m_gGame.showGameResult(-1)
+            window.m_gGameUI.showGameResult(-1)
         }
         let x0=pathList[0].x*106+106/2;
         let y0= -pathList[0].y * 106-106/2 ;

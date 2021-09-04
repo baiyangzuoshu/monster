@@ -22,19 +22,26 @@ cc.Class({
     },
 
     startGame(){
-        window.m_gMonsterSpeed=10
-        this.setGameState(window.GAME_START)
-        window.g_GameUI.updateChapterInfo()
+        let levelDesign=window.g_GlobalData.levelDesign
+        let data=levelDesign.getLevelData(window.m_gkLevel)
+        if(1==data.type){
+            window.m_gGameUI.showBossView()
+        }
+        else{
+            window.m_gMonsterSpeed=10
+            this.setGameState(window.GAME_START)
+            window.m_gGameUI.updateChapterInfo()
+        }
     },
 
     nextChapter(){
         this.setGameState(window.GAME_OVER)
-        window.g_GameUI.showGameResult(1)
+        window.m_gGameUI.showGameResult(1)
         window.m_gBulletBuild.clearAllBullet()
         window.m_gMonsterBuild.clearAllMonster()
         window.m_gCannonBuild.clearAllCannonTarget()
         window.m_gkLevel++
-        window.g_GameUI.updateChapterInfo()
+        window.m_gGameUI.updateChapterInfo()
     },
 
     isPlaying(){

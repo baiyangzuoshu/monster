@@ -7,18 +7,26 @@ cc.Class({
         m_coin:cc.Node,
         m_goldLab:cc.Label,
         m_resultPrefab:cc.Prefab,
+        m_bossView:cc.Prefab,
         m_chapterLab:cc.Label
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        window.g_GameUI=this
+        window.m_gGameUI=this
         //window.g_LocalData.delData()
         this.updateGold()
         this.updateCoin()
         this.updateChapterInfo()
         this.m_coinPool=new cc.NodePool()
+    },
+
+    showBossView(){
+        let view=cc.instantiate(this.m_bossView)
+        view.parent=this.node
+        let js=view.getComponent("bossView")
+        js.play()
     },
 
     showGameResult(result){//1胜利 -1失败
