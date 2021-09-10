@@ -8,6 +8,7 @@ cc.Class({
         m_goldLab:cc.Label,
         m_resultPrefab:cc.Prefab,
         m_bossView:cc.Prefab,
+        m_mapViewPrefab:cc.Prefab,
         m_chapterLab:cc.Label
     },
 
@@ -20,6 +21,19 @@ cc.Class({
         this.updateCoin()
         this.updateChapterInfo()
         this.m_coinPool=new cc.NodePool()
+    },
+
+    showMapView(){
+        if(this.m_mapView==null){
+            let view=cc.instantiate(this.m_mapViewPrefab)
+            view.parent=window.m_gGame.node//屏蔽其他事件传递
+            view.active=false
+            view.zIndex=1000
+            this.m_mapView=view
+        }
+
+        let js=this.m_mapView.getComponent("mapView")
+        js.show()
     },
 
     showBossView(){
