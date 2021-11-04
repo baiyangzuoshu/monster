@@ -17,9 +17,8 @@ export default class NewClass extends cc.Component {
     // onLoad () {}
 
     start () {
-        console.log("game")
-        uiManager.initUIConf(UIConfig)
-        uiManager.open(UIID.UIView)
+        //uiManager.initUIConf(UIConfig)
+        //uiManager.open(UIID.UIView)
     }
 
     // update (dt) {}
