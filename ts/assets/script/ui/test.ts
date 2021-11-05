@@ -5,21 +5,19 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import {uiManager} from "./base/ui/UIManager";
-import { UIConfig, UIID } from "./config/UIConfig";
+import { UIView } from "../base/ui/UIView";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class test extends UIView {
+
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
 
     start () {
-        uiManager.initUIConf(UIConfig)
-        uiManager.open(UIID.UIGameView)
-        uiManager.open(UIID.UITest)
+
     }
 
     // update (dt) {}

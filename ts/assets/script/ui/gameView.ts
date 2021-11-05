@@ -5,10 +5,12 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { UIView } from "../base/ui/UIView";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class mapManager extends cc.Component {
+export default class gameView extends UIView {
 
     @property(cc.JsonAsset)
     jsonData:cc.JsonAsset=null
