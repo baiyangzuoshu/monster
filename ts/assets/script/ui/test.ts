@@ -5,6 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { EventManager } from "../base/common/EventManager";
 import { UIView } from "../base/ui/UIView";
 
 const {ccclass, property} = cc._decorator;
@@ -16,8 +17,8 @@ export default class test extends UIView {
 
     // onLoad () {}
 
-    start () {
-
+    startGame () {
+        EventManager.getInstance().raiseEvent("createMonster")
     }
 
     // update (dt) {}

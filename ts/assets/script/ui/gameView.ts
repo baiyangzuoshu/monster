@@ -5,6 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { EventManager } from "../base/common/EventManager";
 import { UIView } from "../base/ui/UIView";
 
 const {ccclass, property} = cc._decorator;
@@ -18,6 +19,8 @@ export default class gameView extends UIView {
     mapNode:cc.Node=null
     @property(cc.SpriteAtlas)
     mapSpriteAtlas:cc.SpriteAtlas=null
+    @property(cc.Prefab)
+    monsterPrefab:cc.Prefab=null
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
@@ -29,6 +32,13 @@ export default class gameView extends UIView {
         // console.log("_pathList",_pathList)
 
         this.loadMap(_mapBlockData)
+
+        EventManager.getInstance().addEventListener("createMonster",this.createMonster,this)
+    }
+
+    createMonster(){
+        let monster=cc.instantiate(this.monsterPrefab)
+        monster.parent=this.node
     }
 
     loadMap(mapBlockData:Array<Array<number>>){

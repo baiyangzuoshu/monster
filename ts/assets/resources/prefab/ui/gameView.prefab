@@ -223,7 +223,7 @@
       "ctor": "Float64Array",
       "array": [
         -320,
-        335,
+        332,
         0,
         0,
         0,
@@ -277,6 +277,9 @@
     },
     "mapSpriteAtlas": {
       "__uuid__": "b89ba576-68e6-47e0-9216-64c1d61fcf18"
+    },
+    "monsterPrefab": {
+      "__uuid__": "2aa886c6-3966-44a4-a423-6a075eb41939"
     },
     "_id": ""
   },
