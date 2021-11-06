@@ -22,14 +22,15 @@ export default class gameView extends UIView {
     @property(cc.Prefab)
     monsterPrefab:cc.Prefab=null
     // LIFE-CYCLE CALLBACKS:
+    pathList:Array<cc.Vec2>=null
 
     onLoad () {
         let _cannonList=this.jsonData.json._cannonList
         let _mapBlockData=this.jsonData.json._mapBlockData
-        let _pathList=this.jsonData.json._pathList
+        this.pathList=this.jsonData.json._pathList
         // console.log("_cannonList",_cannonList)
         // console.log("_mapBlockData",_mapBlockData)
-        // console.log("_pathList",_pathList)
+        //console.log("_pathList",this.pathList)
 
         this.loadMap(_mapBlockData)
 
@@ -37,8 +38,15 @@ export default class gameView extends UIView {
     }
 
     createMonster(){
+        let x=this.pathList[0].x
+        let y=this.pathList[0].y
         let monster=cc.instantiate(this.monsterPrefab)
-        monster.parent=this.node
+        monster.parent=this.mapNode
+        monster.x=x*106+106/2
+        monster.y=-y*106-106/2
+
+        let ts=monster.getComponent("monster")
+        ts.init(this.pathList)
     }
 
     loadMap(mapBlockData:Array<Array<number>>){
@@ -62,5 +70,7 @@ export default class gameView extends UIView {
 
     }
 
-    // update (dt) {}
+    update (dt) {
+
+    }
 }
