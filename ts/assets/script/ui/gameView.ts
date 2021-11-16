@@ -34,10 +34,10 @@ export default class gameView extends UIView {
 
         this.loadMap(_mapBlockData)
 
-        EventManager.getInstance().addEventListener("createMonster",this.createMonster,this)
+        EventManager.getInstance().addEventListener("gameView_createMonster",this.createMonster,this)
     }
 
-    createMonster(){
+    createMonster(data:any){
         let x=this.pathList[0].x
         let y=this.pathList[0].y
         let monster=cc.instantiate(this.monsterPrefab)
@@ -46,7 +46,8 @@ export default class gameView extends UIView {
         monster.y=-y*106-106/2
 
         let ts=monster.getComponent("monster")
-        ts.init(this.pathList)
+        let [type,pos]=ts.getRondomTypeAndPos()
+        ts.init(this.pathList,type,pos)
     }
 
     loadMap(mapBlockData:Array<Array<number>>){

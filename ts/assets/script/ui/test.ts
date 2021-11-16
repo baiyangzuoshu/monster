@@ -18,8 +18,24 @@ export default class test extends UIView {
     // onLoad () {}
 
     startGame () {
-        EventManager.getInstance().raiseEvent("createMonster")
+        EventManager.getInstance().raiseEvent("gameView_createMonster",{})
     }
 
-    // update (dt) {}
+    handlerEvent(){
+
+    }
+
+    handlerScheuler(){
+
+    }
+
+    draw(){
+
+    }
+
+    update (dt) {
+        this.handlerEvent()
+        this.handlerScheuler()
+        this.draw()
+    }
 }

@@ -16,17 +16,31 @@ export default class monster extends cc.Component {
     monsterLeft:cc.Node=null
     @property(cc.Node)
     monster:cc.Node=null
+    @property(cc.SpriteAtlas)
+    monsterAtlasArray:Array<cc.SpriteAtlas>=[]
     // LIFE-CYCLE CALLBACKS:
     pathList:Array<cc.Vec2>=null
     pathIndex:number=0
     actionChange:boolean=false
     distanceY:number=106
+    typeArr:Array<number>=[10,15,18]
 
     onLoad () {
 
     }
 
-    init(_pathList:Array<cc.Vec2>){
+    getRondomTypeAndPos(){
+        let type=Math.floor(Math.random()*3)
+        let pos=Math.floor(Math.random()*this.typeArr[type])
+        return [type,pos]
+    }
+
+    init(_pathList:Array<cc.Vec2>,type:number,pos:number){
+        //更换精灵
+        let spriteFrame=this.monsterAtlasArray[type].getSpriteFrame(pos.toString())
+        this.monsterLeft.getComponent(cc.Sprite).spriteFrame=spriteFrame
+        this.monsterRight.getComponent(cc.Sprite).spriteFrame=spriteFrame
+        //动作
         this.pathList=_pathList
         this.pathIndex=0
         this.changeDirection(false)
