@@ -23,8 +23,10 @@ export default class gameView extends UIView {
     monsterPrefab:cc.Prefab=null
     // LIFE-CYCLE CALLBACKS:
     pathList:Array<cc.Vec2>=null
+    monsterList:Array<cc.Node>=[]
 
     onLoad () {
+        this.schedule(this.sortMonsterList,0.5)
         let _cannonList=this.jsonData.json._cannonList
         let _mapBlockData=this.jsonData.json._mapBlockData
         this.pathList=this.jsonData.json._pathList
@@ -35,6 +37,20 @@ export default class gameView extends UIView {
         this.loadMap(_mapBlockData)
 
         EventManager.getInstance().addEventListener("gameView_createMonster",this.createMonster,this)
+    }
+
+    sortMonsterList(){
+        if(this.monsterList.length<2)return
+        this.monsterList.sort((a,b)=>{
+            if(a.y-b.y<0.01)
+                return 1
+
+            return -1
+        })
+
+        for(let i=0;i<this.monsterList.length;i++){
+            this.monsterList[i].zIndex=i
+        }
     }
 
     createMonster(data:any){
@@ -48,6 +64,8 @@ export default class gameView extends UIView {
         let ts=monster.getComponent("monster")
         let [type,pos]=ts.getRondomTypeAndPos()
         ts.init(this.pathList,type,pos)
+
+        this.monsterList.push(monster)
     }
 
     loadMap(mapBlockData:Array<Array<number>>){

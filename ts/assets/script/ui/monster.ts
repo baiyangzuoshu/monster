@@ -88,7 +88,7 @@ export default class monster extends cc.Component {
                 let y=this.pathList[0].y*106-106/2+this.distanceY
                 let jumpTo=cc.jumpTo(1.0,new cc.Vec2(x,-y),106,1)
                 let cb=cc.callFunc(()=>{
-                    this.node.destroy()
+                    this.node.active=false
                 })
                 let seq=cc.sequence(jumpTo,cb)
                 cc.tween(this.node).then(seq).start()
