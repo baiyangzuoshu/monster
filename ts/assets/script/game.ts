@@ -20,6 +20,7 @@ export default class NewClass extends cc.Component {
         uiManager.initUIConf(UIConfig)
         uiManager.open(UIID.UIGameView)
         uiManager.open(UIID.UITest)
+        uiManager.open(UIID.UIBottomView)
     }
 
     // update (dt) {}
