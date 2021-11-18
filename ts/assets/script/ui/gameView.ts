@@ -16,27 +16,42 @@ export default class gameView extends UIView {
     @property(cc.JsonAsset)
     jsonData:cc.JsonAsset=null
     @property(cc.Node)
-    mapNode:cc.Node=null
+    monsterNode:cc.Node=null
     @property(cc.SpriteAtlas)
     mapSpriteAtlas:cc.SpriteAtlas=null
     @property(cc.Prefab)
     monsterPrefab:cc.Prefab=null
+    @property(cc.Node)
+    cannonNode:cc.Node=null
+    @property(cc.Prefab)
+    cannonPrefab:cc.Prefab=null
+    @property(cc.Node)
+    mapNode:cc.Node=null
     // LIFE-CYCLE CALLBACKS:
     pathList:Array<cc.Vec2>=null
     monsterList:Array<cc.Node>=[]
 
     onLoad () {
         this.schedule(this.sortMonsterList,0.5)
-        let _cannonList=this.jsonData.json._cannonList
+        let _cannonList:Array<cc.Vec2>=this.jsonData.json._cannonList
         let _mapBlockData=this.jsonData.json._mapBlockData
         this.pathList=this.jsonData.json._pathList
-        // console.log("_cannonList",_cannonList)
-        // console.log("_mapBlockData",_mapBlockData)
+        //console.log("_cannonList",_cannonList)
+        //console.log("_mapBlockData",_mapBlockData)
         //console.log("_pathList",this.pathList)
 
         this.loadMap(_mapBlockData)
-
+        this.loadCannon(_cannonList)
         EventManager.getInstance().addEventListener("gameView_createMonster",this.createMonster,this)
+    }
+
+    loadCannon(cannonList:Array<cc.Vec2>){
+        for(let i=0;i<cannonList.length;i++){
+            let cannon=cc.instantiate(this.cannonPrefab)
+            cannon.parent=this.cannonNode
+            cannon.x=106*cannonList[i].x+106/2
+            cannon.y=-106*cannonList[i].y-106/2
+        }
     }
 
     sortMonsterList(){
@@ -57,7 +72,7 @@ export default class gameView extends UIView {
         let x=this.pathList[0].x
         let y=this.pathList[0].y
         let monster=cc.instantiate(this.monsterPrefab)
-        monster.parent=this.mapNode
+        monster.parent=this.monsterNode
         monster.x=x*106+106/2
         monster.y=-y*106-106/2
 
